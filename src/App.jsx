@@ -67,7 +67,8 @@ const RESPONSIVE_CSS = `
     .newsletter-btn   { border-radius:2px !important; width:100% !important; }
     .footer-bottom    { flex-direction:column !important; gap:10px !important; text-align:center !important; }
     .footer-col-links { display:none !important; }
-    .hero-img-col     { display:none !important; }
+    .hero-bg-img      { object-position: right center !important; }
+    .hero-content     { padding-left:5% !important; padding-right:5% !important; max-width:100% !important; }
   }
 
   @media(max-width:480px){
@@ -293,70 +294,73 @@ function HeroSection() {
   const [loaded, setLoaded] = useState(false);
   useEffect(() => { setTimeout(() => setLoaded(true), 100); }, []);
   const waUrl = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent("Bonjour, je souhaite découvrir les soins Care Yelli")}`;
+
   return (
-    <section style={{ minHeight:"100vh", display:"flex", overflow:"hidden" }}>
+    <section style={{ position:"relative", minHeight:"100vh", overflow:"hidden", display:"flex", alignItems:"center" }}>
 
-      {/* ── Colonne gauche : fond sombre + texte ───────────── */}
-      <div style={{
-        flex:"0 0 55%", position:"relative", overflow:"hidden",
-        background:`linear-gradient(160deg,#2E1A0E 0%,#4A2C1A 50%,#3A2318 100%)`,
-        display:"flex", alignItems:"center",
-      }}>
-        <ZelligePattern opacity={0.05}/>
-        <div
-          className="hero-content"
-          style={{
-            position:"relative", zIndex:2, padding:"108px 8% 60px 8%",
-            width:"100%",
-            opacity: loaded?1:0, transform: loaded?"none":"translateY(30px)",
-            transition:"all 1.2s cubic-bezier(0.22,1,0.36,1) 0.2s",
-          }}
-        >
-          <div style={{ fontFamily:"'Jost',sans-serif", fontSize:10, letterSpacing:"0.5em", color:C.ocre, marginBottom:28, fontWeight:300, display:"flex", alignItems:"center", gap:16 }}>
-            <span style={{ display:"inline-block", width:40, height:1, background:C.ocre }}/>
-            SOINS NATURELS DU TERROIR MAROCAIN
-          </div>
-          <h1 style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:"clamp(36px,5.5vw,88px)", color:C.ivory, fontWeight:300, lineHeight:1.05, margin:"0 0 8px" }}>Transmis</h1>
-          <h1 style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:"clamp(36px,5.5vw,88px)", color:C.ocre, fontWeight:400, fontStyle:"italic", lineHeight:1.05, margin:"0 0 40px" }}>de mère en fille.</h1>
-          <p style={{ fontFamily:"'Jost',sans-serif", fontSize:15, fontWeight:300, color:"rgba(237,229,216,0.75)", lineHeight:1.8, maxWidth:440, marginBottom:52 }}>
-            Des soins enracinés dans la tradition berbère et africaine. Huile d\'argan, oliban, figue de barbarie — les secrets de beauté que nos mères nous ont confiés.
-          </p>
-          <div style={{ display:"flex", gap:16, alignItems:"center", flexWrap:"wrap" }}>
-            <a href="#soins" style={{ background:C.ocre, color:C.ivory, border:"none", borderRadius:2, padding:"16px 36px", fontFamily:"'Jost',sans-serif", fontSize:11, letterSpacing:"0.25em", cursor:"pointer", textDecoration:"none" }}>DÉCOUVRIR LES SOINS</a>
-            <a href={waUrl} target="_blank" rel="noopener noreferrer" style={{ fontFamily:"'Jost',sans-serif", fontSize:11, letterSpacing:"0.2em", color:"rgba(237,229,216,0.6)", textDecoration:"none", fontWeight:300, display:"flex", alignItems:"center", gap:10 }}>
-              COMMANDER <span style={{ display:"inline-block", width:30, height:1, background:"currentColor" }}/>
-            </a>
-          </div>
-          <div style={{ display:"flex", gap:40, marginTop:64, borderTop:`1px solid rgba(196,114,74,0.2)`, paddingTop:32, flexWrap:"wrap" }}>
-            {[{n:"100%",l:"Ingrédients naturels"},{n:"3",l:"Soins iconiques"},{n:"0",l:"Parabènes & sulfates"}].map(s => (
-              <div key={s.l}>
-                <div style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:32, color:C.goldLight, fontWeight:300 }}>{s.n}</div>
-                <div style={{ fontFamily:"'Jost',sans-serif", fontSize:9, color:"rgba(197,167,130,0.7)", letterSpacing:"0.15em", marginTop:4 }}>{s.l.toUpperCase()}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* ── Colonne droite : image 3 pots pleine hauteur ───── */}
-      <div
-        className="hero-img-col"
+      {/* Image plein écran */}
+      <img
+        className="hero-bg-img"
+        src="/images/hero-trio.jpg.png"
+        alt="Les trois soins Care Yelli — Éclat du Teint, Nila et Anti-Âge sur fond lin naturel"
         style={{
-          flex:1, position:"relative", overflow:"hidden",
-          opacity: loaded?1:0, transition:"opacity 1.4s ease 0.4s",
+          position:"absolute", inset:0,
+          width:"100%", height:"100%",
+          objectFit:"cover", objectPosition:"center",
+          display:"block",
+          opacity: loaded ? 1 : 0,
+          transition:"opacity 1.6s ease",
+        }}
+      />
+
+      {/* Overlay général — lisibilité du texte */}
+      <div style={{ position:"absolute", inset:0, background:"rgba(28,14,6,0.48)", pointerEvents:"none" }}/>
+
+      {/* Gradient top — lisibilité du header / trust bar */}
+      <div style={{
+        position:"absolute", top:0, left:0, right:0, height:180,
+        background:"linear-gradient(to bottom, rgba(0,0,0,0.60) 0%, rgba(0,0,0,0.15) 70%, transparent 100%)",
+        pointerEvents:"none",
+      }}/>
+
+      {/* Pattern zellige discret */}
+      <ZelligePattern opacity={0.04}/>
+
+      {/* Contenu texte superposé */}
+      <div
+        className="hero-content"
+        style={{
+          position:"relative", zIndex:2,
+          padding:"140px 8% 80px 8%",
+          maxWidth:760, width:"100%",
+          opacity: loaded ? 1 : 0,
+          transform: loaded ? "none" : "translateY(28px)",
+          transition:"all 1.2s cubic-bezier(0.22,1,0.36,1) 0.5s",
         }}
       >
-        <img
-          src="/images/hero-trio.jpg.png"
-          alt="Les trois soins Care Yelli — Éclat, Nila et Anti-Âge sur fond lin naturel"
-          loading="lazy"
-          style={{
-            position:"absolute", inset:0,
-            width:"100%", height:"100%",
-            objectFit:"cover", objectPosition:"center",
-            display:"block",
-          }}
-        />
+        <div style={{ fontFamily:"'Jost',sans-serif", fontSize:10, letterSpacing:"0.5em", color:C.ocre, marginBottom:28, fontWeight:300, display:"flex", alignItems:"center", gap:16 }}>
+          <span style={{ display:"inline-block", width:40, height:1, background:C.ocre }}/>
+          SOINS NATURELS DU TERROIR MAROCAIN
+        </div>
+        <h1 style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:"clamp(40px,6vw,96px)", color:C.ivory, fontWeight:300, lineHeight:1.05, margin:"0 0 8px" }}>Transmis</h1>
+        <h1 style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:"clamp(40px,6vw,96px)", color:C.ocre, fontWeight:400, fontStyle:"italic", lineHeight:1.05, margin:"0 0 40px" }}>de mère en fille.</h1>
+        <p style={{ fontFamily:"'Jost',sans-serif", fontSize:15, fontWeight:300, color:"rgba(237,229,216,0.82)", lineHeight:1.85, maxWidth:480, marginBottom:52 }}>
+          Des soins enracinés dans la tradition berbère et africaine. Huile d\'argan, oliban, figue de barbarie — les secrets de beauté que nos mères nous ont confiés.
+        </p>
+        <div style={{ display:"flex", gap:16, alignItems:"center", flexWrap:"wrap" }}>
+          <a href="#soins" style={{ background:C.ocre, color:C.ivory, border:"none", borderRadius:2, padding:"16px 36px", fontFamily:"'Jost',sans-serif", fontSize:11, letterSpacing:"0.25em", cursor:"pointer", textDecoration:"none" }}>DÉCOUVRIR LES SOINS</a>
+          <a href={waUrl} target="_blank" rel="noopener noreferrer" style={{ fontFamily:"'Jost',sans-serif", fontSize:11, letterSpacing:"0.2em", color:"rgba(237,229,216,0.65)", textDecoration:"none", fontWeight:300, display:"flex", alignItems:"center", gap:10 }}>
+            COMMANDER <span style={{ display:"inline-block", width:30, height:1, background:"currentColor" }}/>
+          </a>
+        </div>
+        <div style={{ display:"flex", gap:40, marginTop:64, borderTop:"1px solid rgba(196,114,74,0.25)", paddingTop:32, flexWrap:"wrap" }}>
+          {[{n:"100%",l:"Ingrédients naturels"},{n:"3",l:"Soins iconiques"},{n:"0",l:"Parabènes & sulfates"}].map(s => (
+            <div key={s.l}>
+              <div style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:32, color:C.goldLight, fontWeight:300 }}>{s.n}</div>
+              <div style={{ fontFamily:"'Jost',sans-serif", fontSize:9, color:"rgba(197,167,130,0.75)", letterSpacing:"0.15em", marginTop:4 }}>{s.l.toUpperCase()}</div>
+            </div>
+          ))}
+        </div>
       </div>
 
     </section>
