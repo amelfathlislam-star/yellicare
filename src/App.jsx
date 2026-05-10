@@ -293,27 +293,34 @@ function HeroSection() {
   return (
     <section style={{
       minHeight:"100vh", position:"relative", overflow:"hidden",
-      background:`linear-gradient(160deg,#2E1A0E 0%,#4A2C1A 40%,#3A2318 100%)`,
+      background:C.dark,
       display:"flex", alignItems:"center",
     }}>
-      <ZelligePattern opacity={0.05}/>
+      {/* Photo hero plein écran */}
+      <img
+        src="/images/hero.jpg.png"
+        alt=""
+        aria-hidden="true"
+        style={{
+          position:"absolute", inset:0,
+          width:"100%", height:"100%",
+          objectFit:"cover", objectPosition:"center",
+          opacity: loaded ? 1 : 0,
+          transition:"opacity 1.2s ease",
+        }}
+      />
+      {/* Overlay dégradé : sombre côté texte, transparent côté produits */}
+      <div style={{
+        position:"absolute", inset:0,
+        background:"linear-gradient(to right, rgba(28,16,6,0.82) 0%, rgba(28,16,6,0.62) 40%, rgba(28,16,6,0.18) 100%)",
+      }}/>
       {/* Arch */}
       <div className="hero-arch" style={{
         position:"absolute", right:"8%", top:"50%", transform:"translateY(-50%)",
         width:420, height:560, borderRadius:"210px 210px 0 0",
-        border:`1px solid rgba(196,114,74,0.25)`,
+        border:`1px solid rgba(196,114,74,0.18)`,
         opacity: loaded?1:0, transition:"opacity 1.5s ease 0.3s",
       }}/>
-      {/* Jar */}
-      <div className="hero-jar-wrap" style={{
-        position:"absolute", right:"11%", top:"50%", transform:"translateY(-50%)",
-        opacity: loaded?1:0, transition:"opacity 1.5s ease 0.8s",
-      }}>
-        <img src={IMG_ANTIAGE} alt="Care Yelli" className="hero-jar-img" style={{
-          width:220, height:"auto",
-          filter:"drop-shadow(0 40px 60px rgba(0,0,0,0.5))",
-        }}/>
-      </div>
       {/* Content */}
       <div className="hero-content" style={{
         position:"relative", zIndex:2, padding:"0 6%", maxWidth:680,
