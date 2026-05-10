@@ -69,6 +69,7 @@ const RESPONSIVE_CSS = `
     .footer-col-links { display:none !important; }
     .hero-bg-img      { object-position: right center !important; }
     .hero-content     { padding-left:5% !important; padding-right:5% !important; max-width:100% !important; }
+    .nav-logo-img     { height:38px !important; }
   }
 
   @media(max-width:480px){
@@ -232,12 +233,16 @@ function NavBar({ scrolled }) {
     }}>
       <div style={{ maxWidth:1200, margin:"0 auto", display:"flex", alignItems:"center", justifyContent:"space-between", height:72 }}>
         {/* Logo */}
-        <a href="#" style={{ textDecoration:"none" }}>
-          <div style={{ fontFamily:"'Cormorant Garamond', serif", letterSpacing:"0.02em" }}>
-            <span style={{ fontSize:9, letterSpacing:"0.3em", color:C.gold, display:"block", fontWeight:400 }}>CARE</span>
-            <span style={{ fontSize:28, color: scrolled ? C.dark : C.ivory, fontWeight:400, lineHeight:1, display:"block" }}>yelli</span>
-            <span style={{ fontSize:8, letterSpacing:"0.25em", color:C.goldLight, display:"block", fontFamily:"'Jost',sans-serif" }}>— يلي —</span>
-          </div>
+        <a href="#" style={{ textDecoration:"none", display:"flex", alignItems:"center" }}>
+          <img
+            src="/images/yellicare_trans.png"
+            alt="Care Yelli — Soins Naturels Marocains"
+            className="nav-logo-img"
+            style={{
+              height:50, width:"auto", display:"block",
+              mixBlendMode: scrolled ? "normal" : "lighten",
+            }}
+          />
         </a>
         {/* Desktop links */}
         <div className="nav-links" style={{ display:"flex", gap:36, alignItems:"center" }}>
@@ -928,10 +933,17 @@ function Footer() {
       <div style={{ maxWidth:1200, margin:"0 auto" }}>
         <div className="gf" style={{ gap:48, marginBottom:56 }}>
           <div>
-            <div style={{ fontFamily:"'Cormorant Garamond',serif", marginBottom:16 }}>
-              <div style={{ fontSize:9, letterSpacing:"0.3em", color:C.gold, marginBottom:2 }}>CARE</div>
-              <div style={{ fontSize:32, color:C.ivory, fontWeight:400 }}>yelli</div>
-              <div style={{ fontSize:8, letterSpacing:"0.2em", color:C.goldLight, marginTop:2, fontFamily:"'Jost',sans-serif" }}>— يلي —</div>
+            <div style={{ display:"flex", alignItems:"center", gap:14, marginBottom:20 }}>
+              <img
+                src="/images/logo_trans.png"
+                alt="Monogramme Care Yelli"
+                style={{ height:44, width:"auto", display:"block", mixBlendMode:"lighten" }}
+              />
+              <img
+                src="/images/yellicare_trans.png"
+                alt="Care Yelli — Soins Naturels Marocains"
+                style={{ height:60, width:"auto", display:"block", mixBlendMode:"lighten" }}
+              />
             </div>
             <p style={{ fontFamily:"'Jost',sans-serif", fontSize:12, fontWeight:300, color:"rgba(237,229,216,0.5)", lineHeight:1.8, maxWidth:260 }}>
               Soins naturels du terroir marocain et africain. Formulés avec amour, transmis avec âme.
