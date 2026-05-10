@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import ProductAntiAge from "./ProductAntiAge.jsx";
+import ProductNila from "./ProductNila.jsx";
 
 // ─── Config — à personnaliser ─────────────────────────────────────
 export const WA_NUMBER    = "212XXXXXXXXX";          // ← remplacer par le vrai numéro
@@ -565,7 +566,7 @@ function ProductCard({ product, onOpen }) {
 }
 
 // ─── Products section ─────────────────────────────────────────────
-function ProductsSection({ onOpen, onOpenAntiAge }) {
+function ProductsSection({ onOpen, onOpenAntiAge, onOpenNila }) {
   return (
     <section id="soins" className="section-pad" style={{ background:C.cream, padding:"120px 6%", position:"relative" }}>
       <ZelligePattern opacity={0.04}/>
@@ -578,7 +579,7 @@ function ProductsSection({ onOpen, onOpenAntiAge }) {
           </p>
         </div>
         <div className="g3" style={{ gap:28 }}>
-          {PRODUCTS.map(p => <ProductCard key={p.id} product={p} onOpen={p.id === "figue" ? onOpenAntiAge : onOpen}/>)}
+          {PRODUCTS.map(p => <ProductCard key={p.id} product={p} onOpen={p.id === "figue" ? onOpenAntiAge : p.id === "nila" ? onOpenNila : onOpen}/>)}
         </div>
         <div style={{ textAlign:"center", marginTop:56 }}>
           <a href={`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent("Bonjour, je souhaite voir toute la gamme Care Yelli")}`} target="_blank" rel="noopener noreferrer" style={{
@@ -896,6 +897,7 @@ export default function CareYelliWebsite() {
   const [scrolled, setScrolled] = useState(false);
   const [modalProduct, setModalProduct] = useState(null);
   const [openProduct, setOpenProduct] = useState(false);
+  const [openNila, setOpenNila] = useState(false);
 
   useEffect(() => {
     const h = () => setScrolled(window.scrollY > 60);
@@ -913,7 +915,7 @@ export default function CareYelliWebsite() {
       <NavBar scrolled={scrolled}/>
       <HeroSection/>
       <PhilosophySection/>
-      <ProductsSection onOpen={setModalProduct} onOpenAntiAge={() => { setModalProduct(null); setOpenProduct(true); }}/>
+      <ProductsSection onOpen={setModalProduct} onOpenAntiAge={() => { setModalProduct(null); setOpenProduct(true); }} onOpenNila={() => { setModalProduct(null); setOpenNila(true); }}/>
       <IngredientsSection/>
       <ReviewsSection/>
       <ValuesSection/>
@@ -922,6 +924,7 @@ export default function CareYelliWebsite() {
       <CookieBanner/>
 
       {openProduct && <ProductAntiAge onClose={() => setOpenProduct(false)}/>}
+      {openNila && <ProductNila onClose={() => setOpenNila(false)}/>}
       {modalProduct && (
         <ProductModal product={modalProduct} onClose={() => setModalProduct(null)}/>
       )}
