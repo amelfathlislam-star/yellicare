@@ -7,6 +7,9 @@ const IMG_FIGUE = "/images/figue.jpg";
 const IMG_KARITE = "/images/karite.jpg";
 const IMG_TEXTURE = "/images/texture.jpg";
 const IMG_JAR = "/images/jar.jpg";
+const IMG_OLIBAN = "/images/1.png";
+const IMG_NILA = "/images/2.png";
+const IMG_ANTIAGE = "/images/3.png";
 const IMG_HANDS = "/images/hands.jpg";
 
 // ─── Palette ─────────────────────────────────────────────────────
@@ -26,7 +29,7 @@ const PRODUCTS = [
     description: "Le secret des femmes du Souss depuis des générations. L\'encens oliban, trésor des caravanes sahariennes, révèle l\'éclat naturel tout en renforçant la barrière cutanée.",
     color: "#C4724A", colorLight: "#E8A882", label: "Purifiant · Apaisant",
     price: "240 MAD", size: "50ml", skin: "Tous types de peau",
-    image: IMG_JAR,
+    image: IMG_OLIBAN,
   },
   {
     id: "nila", name: "Soin Hydratant", subtitle: "Unifiant au Nila Pur",
@@ -34,7 +37,7 @@ const PRODUCTS = [
     description: "La plante indigo, utilisée au hammam depuis des siècles, illumine et unifie le teint. Enrichi d\'huile d\'argan vierge du Souss-Massa, pressée à froid.",
     color: "#7B9BAD", colorLight: "#B8D0DB", label: "Effet perfecteur · Teint terne",
     price: "210 MAD", size: "50ml", skin: "Peaux ternes",
-    image: IMG_JAR,
+    image: IMG_NILA,
   },
   {
     id: "figue", name: "Soin Anti-Âge", subtitle: "Raffermissant",
@@ -42,7 +45,7 @@ const PRODUCTS = [
     description: "L\'huile précieuse extraite des pépins de figue de barbarie — il faut 1 tonne de fruits pour obtenir 1 litre. Un concentré de régénération pour une peau redensifiée.",
     color: "#7A9B6E", colorLight: "#B5CC9E", label: "Régénérant · Hydratant",
     price: "290 MAD", size: "50ml", skin: "Tous types de peau",
-    image: IMG_JAR,
+    image: IMG_ANTIAGE,
   },
 ];
 
