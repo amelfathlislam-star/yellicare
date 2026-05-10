@@ -331,7 +331,7 @@ function HeroSection() {
         className="hero-content"
         style={{
           position:"relative", zIndex:2,
-          padding:"140px 8% 80px 8%",
+          padding:"140px 8% 100px 8%",
           maxWidth:760, width:"100%",
           opacity: loaded ? 1 : 0,
           transform: loaded ? "none" : "translateY(28px)",
@@ -353,17 +353,56 @@ function HeroSection() {
             COMMANDER <span style={{ display:"inline-block", width:30, height:1, background:"currentColor" }}/>
           </a>
         </div>
-        <div style={{ display:"flex", gap:40, marginTop:64, borderTop:"1px solid rgba(196,114,74,0.25)", paddingTop:32, flexWrap:"wrap" }}>
-          {[{n:"100%",l:"Ingrédients naturels"},{n:"3",l:"Soins iconiques"},{n:"0",l:"Parabènes & sulfates"}].map(s => (
-            <div key={s.l}>
-              <div style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:32, color:C.goldLight, fontWeight:300 }}>{s.n}</div>
-              <div style={{ fontFamily:"'Jost',sans-serif", fontSize:9, color:"rgba(197,167,130,0.75)", letterSpacing:"0.15em", marginTop:4 }}>{s.l.toUpperCase()}</div>
-            </div>
-          ))}
-        </div>
       </div>
 
     </section>
+  );
+}
+
+// ─── Stats Band ───────────────────────────────────────────────────
+const STATS = [
+  { n:"100%", l:"Ingrédients naturels" },
+  { n:"3",    l:"Soins iconiques"      },
+  { n:"0",    l:"Parabènes & sulfates" },
+];
+
+function StatsBand() {
+  return (
+    <div style={{
+      background: C.ocre,
+      display:"flex", alignItems:"stretch", justifyContent:"center",
+      width:"100%",
+    }}>
+      {STATS.map((s, i) => (
+        <>
+          {i > 0 && (
+            <div key={`sep-${i}`} style={{
+              width:1, background:"rgba(255,255,255,0.25)",
+              margin:"16px 0",
+              flexShrink:0,
+            }}/>
+          )}
+          <div key={s.l} style={{
+            flex:1, display:"flex", flexDirection:"column",
+            alignItems:"center", justifyContent:"center",
+            padding:"22px 16px",
+          }}>
+            <div style={{
+              fontFamily:"'Cormorant Garamond',serif",
+              fontSize:"clamp(28px,4vw,44px)",
+              color:C.ivory, fontWeight:500, lineHeight:1,
+              marginBottom:7,
+            }}>{s.n}</div>
+            <div style={{
+              fontFamily:"'Jost',sans-serif",
+              fontSize:9, fontWeight:300,
+              color:"rgba(253,250,246,0.82)",
+              letterSpacing:"0.22em", textAlign:"center",
+            }}>{s.l.toUpperCase()}</div>
+          </div>
+        </>
+      ))}
+    </div>
   );
 }
 
@@ -973,6 +1012,7 @@ export default function CareYelliWebsite() {
       <TrustBar/>
       <NavBar scrolled={scrolled}/>
       <HeroSection/>
+      <StatsBand/>
       <PhilosophySection/>
       <ProductsSection onOpen={setModalProduct} onOpenAntiAge={() => { setModalProduct(null); setOpenProduct(true); }} onOpenNila={() => { setModalProduct(null); setOpenNila(true); }}/>
       <IngredientsSection/>
