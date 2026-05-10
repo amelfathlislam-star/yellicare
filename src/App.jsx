@@ -235,13 +235,10 @@ function NavBar({ scrolled }) {
         {/* Logo */}
         <a href="#" style={{ textDecoration:"none", display:"flex", alignItems:"center" }}>
           <img
-            src="/images/yellicare_trans.png"
+            src="/images/yellicare_clean.png"
             alt="Care Yelli — Soins Naturels Marocains"
             className="nav-logo-img"
-            style={{
-              height:50, width:"auto", display:"block",
-              mixBlendMode: scrolled ? "normal" : "lighten",
-            }}
+            style={{ height:50, width:"auto", display:"block" }}
           />
         </a>
         {/* Desktop links */}
@@ -933,16 +930,11 @@ function Footer() {
       <div style={{ maxWidth:1200, margin:"0 auto" }}>
         <div className="gf" style={{ gap:48, marginBottom:56 }}>
           <div>
-            <div style={{ display:"flex", alignItems:"center", gap:14, marginBottom:20 }}>
+            <div style={{ marginBottom:20 }}>
               <img
-                src="/images/logo_trans.png"
-                alt="Monogramme Care Yelli"
-                style={{ height:44, width:"auto", display:"block", mixBlendMode:"lighten" }}
-              />
-              <img
-                src="/images/yellicare_trans.png"
+                src="/images/yellicare_clean.png"
                 alt="Care Yelli — Soins Naturels Marocains"
-                style={{ height:60, width:"auto", display:"block", mixBlendMode:"lighten" }}
+                style={{ height:90, width:"auto", display:"block" }}
               />
             </div>
             <p style={{ fontFamily:"'Jost',sans-serif", fontSize:12, fontWeight:300, color:"rgba(237,229,216,0.5)", lineHeight:1.8, maxWidth:260 }}>
