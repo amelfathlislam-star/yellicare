@@ -11,6 +11,7 @@ const IMG_OLIBAN = "/images/1.png";
 const IMG_NILA = "/images/2.png";
 const IMG_ANTIAGE = "/images/3.png";
 const IMG_HANDS = "/images/hands.jpg";
+const IMG_PHILOSOPHIE = "/images/philosophie.jpg";
 
 // ─── Palette ─────────────────────────────────────────────────────
 const C = {
@@ -225,7 +226,7 @@ function PhilosophySection() {
         {/* Photo lifestyle */}
         <div style={{ position:"relative" }}>
           <div style={{ borderRadius:4, overflow:"hidden", position:"relative" }}>
-            <img src={IMG_HANDS} alt="Rituel de soin" style={{ width:"100%", height:480, objectFit:"cover", objectPosition:"center top", display:"block" }}/>
+            <img src={IMG_PHILOSOPHIE} alt="Rituel de soin" style={{ width:"100%", height:480, objectFit:"cover", objectPosition:"center", display:"block" }}/>
             <div style={{ position:"absolute", inset:0, background:"linear-gradient(to top, rgba(46,30,18,0.6) 0%, transparent 60%)" }}/>
             <div style={{ position:"absolute", bottom:32, left:32, right:32 }}>
               <p style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:20, fontStyle:"italic", color:C.ivory, lineHeight:1.6, margin:"0 0 12px" }}>
