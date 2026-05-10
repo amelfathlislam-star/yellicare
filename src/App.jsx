@@ -1,17 +1,21 @@
 import { useState, useEffect } from "react";
 
+// ─── Config — à personnaliser ─────────────────────────────────────
+const WA_NUMBER    = "212XXXXXXXXX";          // ← remplacer par le vrai numéro
+const FORMSPREE_ID = "TON_ID";                // ← remplacer par l'ID Formspree
+
 // ─── Images ──────────────────────────────────────────────────────
-const IMG_ARGAN = "/images/argan.jpg";
-const IMG_ALOE = "/images/aloe.jpg";
-const IMG_FIGUE = "/images/figue.jpg";
-const IMG_KARITE = "/images/karite.jpg";
-const IMG_TEXTURE = "/images/texture.jpg";
-const IMG_JAR = "/images/jar.jpg";
-const IMG_OLIBAN = "/images/1.png";
-const IMG_NILA = "/images/2.png";
-const IMG_ANTIAGE = "/images/3.png";
-const IMG_HANDS = "/images/hands.jpg";
-const IMG_PHILOSOPHIE = "/images/philosophie.jpg";
+const IMG_ARGAN      = "/images/argan.jpg";
+const IMG_ALOE       = "/images/aloe.jpg";
+const IMG_FIGUE      = "/images/figue.jpg";
+const IMG_KARITE     = "/images/karite.jpg";
+const IMG_TEXTURE    = "/images/texture.jpg";
+const IMG_JAR        = "/images/jar.jpg";
+const IMG_OLIBAN     = "/images/1.png";
+const IMG_NILA       = "/images/2.png";
+const IMG_ANTIAGE    = "/images/3.png";
+const IMG_HANDS      = "/images/hands.jpg";
+const IMG_PHILOSOPHIE= "/images/philosophie.jpg";
 
 // ─── Palette ─────────────────────────────────────────────────────
 const C = {
@@ -23,17 +27,19 @@ const C = {
 const FONTS = `@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap');`;
 
 const RESPONSIVE_CSS = `
+  html { scroll-behavior:smooth; scroll-padding-top:108px; }
   .g2  { display:grid; grid-template-columns:1fr 1fr; }
   .g3  { display:grid; grid-template-columns:repeat(3,1fr); }
   .gi  { display:grid; grid-template-columns:repeat(3,1fr); }
   .g4  { display:grid; grid-template-columns:repeat(4,1fr); }
   .gf  { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; }
+  .modal-grid { display:grid; grid-template-columns:1fr 1fr; }
   .nav-hamburger { display:none; flex-direction:column; gap:6px; background:none; border:none; cursor:pointer; padding:8px; }
 
   @media(max-width:1024px){
-    .g3 { grid-template-columns:repeat(2,1fr) !important; }
-    .gi { grid-template-columns:repeat(2,1fr) !important; }
-    .g4 { grid-template-columns:repeat(2,1fr) !important; }
+    .g3  { grid-template-columns:repeat(2,1fr) !important; }
+    .gi  { grid-template-columns:repeat(2,1fr) !important; }
+    .g4  { grid-template-columns:repeat(2,1fr) !important; }
     .hero-jar-img { width:160px !important; }
   }
 
@@ -43,12 +49,14 @@ const RESPONSIVE_CSS = `
     .gi  { grid-template-columns:repeat(2,1fr) !important; }
     .g4  { grid-template-columns:repeat(2,1fr) !important; }
     .gf  { grid-template-columns:repeat(2,1fr) !important; }
+    .modal-grid { grid-template-columns:1fr !important; }
+    .modal-img  { height:260px !important; }
     .section-pad { padding:64px 5% !important; }
     .nav-links    { display:none !important; }
     .nav-hamburger{ display:flex !important; }
     .hero-jar-wrap{ display:none !important; }
     .hero-arch    { display:none !important; }
-    .hero-content { max-width:100% !important; padding-top:90px !important; }
+    .hero-content { max-width:100% !important; padding-top:108px !important; }
     .stat-banner  { flex-direction:column !important; text-align:center !important; gap:20px !important; align-items:center !important; }
     .newsletter-form  { flex-direction:column !important; max-width:100% !important; }
     .newsletter-input { border-right:1px solid #D4C4B0 !important; border-radius:2px !important; }
@@ -73,6 +81,9 @@ const PRODUCTS = [
     color: "#C4724A", colorLight: "#E8A882", label: "Purifiant · Apaisant",
     price: "240 MAD", size: "50ml", skin: "Tous types de peau",
     image: IMG_OLIBAN,
+    benefits: ["Purifie en profondeur", "Apaise les rougeurs", "Renforce la barrière cutanée", "Révèle l\'éclat naturel"],
+    howToUse: "Appliquer matin et/ou soir sur visage propre et sec. Masser en mouvements circulaires jusqu\'à absorption complète.",
+    inci: "Aqua, Boswellia Serrata Resin Extract, Hydrolyzed Collagen, Argania Spinosa Kernel Oil, Butyrospermum Parkii Butter, Aloe Barbadensis Leaf Juice, Glycerin, Tocopherol.",
   },
   {
     id: "nila", name: "Soin Hydratant", subtitle: "Unifiant au Nila Pur",
@@ -81,6 +92,9 @@ const PRODUCTS = [
     color: "#7B9BAD", colorLight: "#B8D0DB", label: "Effet perfecteur · Teint terne",
     price: "210 MAD", size: "50ml", skin: "Peaux ternes",
     image: IMG_NILA,
+    benefits: ["Unifie le teint", "Hydratation longue durée", "Effet bonne mine immédiat", "Réduit l\'aspect terne"],
+    howToUse: "Utiliser matin et soir après nettoyage. Déposer une noisette sur le visage et le cou, masser doucement jusqu\'à pénétration complète.",
+    inci: "Aqua, Argania Spinosa Kernel Oil*, Indigofera Tinctoria Leaf Powder, Aloe Barbadensis Leaf Juice, Sodium Hyaluronate, Glycerin, Tocopherol. *Agriculture biologique.",
   },
   {
     id: "figue", name: "Soin Anti-Âge", subtitle: "Raffermissant",
@@ -89,6 +103,9 @@ const PRODUCTS = [
     color: "#7A9B6E", colorLight: "#B5CC9E", label: "Régénérant · Hydratant",
     price: "290 MAD", size: "50ml", skin: "Tous types de peau",
     image: IMG_ANTIAGE,
+    benefits: ["Réduit visiblement les rides", "Raffermit et redensifie", "Régénère en profondeur", "Nourrit intensément"],
+    howToUse: "Appliquer le soir sur visage et cou propres. Masser délicatement en insistant sur les zones de tension. Laisser agir toute la nuit.",
+    inci: "Aqua, Opuntia Ficus-Indica Seed Oil, Butyrospermum Parkii Butter, Opuntia Ficus-Indica Stem Extract, Glycerin, Tocopherol, Rosmarinus Officinalis Leaf Extract.",
   },
 ];
 
@@ -132,7 +149,23 @@ const INGREDIENTS = [
   },
 ];
 
-// ─── Pattern zellige SVG ──────────────────────────────────────────
+// ─── Avis clients ─────────────────────────────────────────────────
+const REVIEWS = [
+  {
+    name: "Fatima Z.", city: "Agadir", stars: 5,
+    text: "Le soin à l\'oliban a transformé ma peau en trois semaines. Mes amies me demandent mon secret. C\'est exactement ce que ma grand-mère utilisait, mais en version moderne et raffinée.",
+  },
+  {
+    name: "Nadia B.", city: "Casablanca", stars: 5,
+    text: "La crème au Nila est incroyable. Mon teint est unifié et lumineux dès le matin. Un luxe accessible et tellement naturel — je ne peux vraiment plus m\'en passer.",
+  },
+  {
+    name: "Samira M.", city: "Marrakech", stars: 5,
+    text: "J\'utilise le soin anti-âge depuis deux mois. Ma peau est plus ferme et les petites ridules ont nettement diminué. Un concentré de nature marocaine, pur et efficace.",
+  },
+];
+
+// ─── Pattern zellige ──────────────────────────────────────────────
 function ZelligePattern({ opacity = 0.06 }) {
   return (
     <svg style={{ position:"absolute", inset:0, width:"100%", height:"100%", pointerEvents:"none" }} xmlns="http://www.w3.org/2000/svg">
@@ -153,10 +186,36 @@ function ZelligePattern({ opacity = 0.06 }) {
   );
 }
 
+// ─── Trust Bar ────────────────────────────────────────────────────
+function TrustBar() {
+  return (
+    <div style={{
+      position:"fixed", top:72, left:0, right:0, zIndex:99,
+      height:36, background:C.ocre,
+      display:"flex", alignItems:"center", justifyContent:"center", gap:32,
+    }}>
+      {["Livraison à Agadir", "Paiement à la livraison", "Produits 100% naturels"].map(item => (
+        <span key={item} style={{ fontFamily:"'Jost',sans-serif", fontSize:9, letterSpacing:"0.2em", color:C.ivory, fontWeight:300 }}>
+          ✦ {item.toUpperCase()}
+        </span>
+      ))}
+    </div>
+  );
+}
+
 // ─── NavBar ───────────────────────────────────────────────────────
+const NAV_LINKS = [
+  { label:"Soins",        href:"#soins" },
+  { label:"Ingrédients",  href:"#ingredients" },
+  { label:"Histoire",     href:"#histoire" },
+  { label:"Boutique",     href:"#boutique" },
+];
+
 function NavBar({ scrolled }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const barColor = scrolled ? C.dark : C.ivory;
+  const waUrl = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent("Bonjour, je souhaite commander un soin Care Yelli")}`;
+
   return (
     <nav style={{
       position:"fixed", top:0, left:0, right:0, zIndex:100,
@@ -167,27 +226,29 @@ function NavBar({ scrolled }) {
     }}>
       <div style={{ maxWidth:1200, margin:"0 auto", display:"flex", alignItems:"center", justifyContent:"space-between", height:72 }}>
         {/* Logo */}
-        <div style={{ fontFamily:"'Cormorant Garamond', serif", letterSpacing:"0.02em" }}>
-          <span style={{ fontSize:9, letterSpacing:"0.3em", color:C.gold, display:"block", fontWeight:400 }}>CARE</span>
-          <span style={{ fontSize:28, color: scrolled ? C.dark : C.ivory, fontWeight:400, lineHeight:1, display:"block" }}>yelli</span>
-          <span style={{ fontSize:8, letterSpacing:"0.25em", color:C.goldLight, display:"block", fontFamily:"'Jost',sans-serif" }}>— يلي —</span>
-        </div>
+        <a href="#" style={{ textDecoration:"none" }}>
+          <div style={{ fontFamily:"'Cormorant Garamond', serif", letterSpacing:"0.02em" }}>
+            <span style={{ fontSize:9, letterSpacing:"0.3em", color:C.gold, display:"block", fontWeight:400 }}>CARE</span>
+            <span style={{ fontSize:28, color: scrolled ? C.dark : C.ivory, fontWeight:400, lineHeight:1, display:"block" }}>yelli</span>
+            <span style={{ fontSize:8, letterSpacing:"0.25em", color:C.goldLight, display:"block", fontFamily:"'Jost',sans-serif" }}>— يلي —</span>
+          </div>
+        </a>
         {/* Desktop links */}
         <div className="nav-links" style={{ display:"flex", gap:36, alignItems:"center" }}>
-          {["Soins","Ingrédients","Histoire","Boutique"].map(item => (
-            <a key={item} href="#" style={{
+          {NAV_LINKS.map(({ label, href }) => (
+            <a key={label} href={href} style={{
               fontFamily:"'Jost',sans-serif", fontSize:11, letterSpacing:"0.18em",
               color: scrolled ? C.darkMid : C.ivory, textDecoration:"none",
               fontWeight:300, opacity:0.85,
-            }}>{item.toUpperCase()}</a>
+            }}>{label.toUpperCase()}</a>
           ))}
-          <button style={{
+          <a href={waUrl} target="_blank" rel="noopener noreferrer" style={{
             background:C.ocre, color:C.ivory, border:"none", borderRadius:2,
             padding:"10px 24px", fontFamily:"'Jost',sans-serif", fontSize:11,
-            letterSpacing:"0.2em", cursor:"pointer",
-          }}>COMMANDER</button>
+            letterSpacing:"0.2em", cursor:"pointer", textDecoration:"none", display:"inline-block",
+          }}>COMMANDER</a>
         </div>
-        {/* Hamburger button — hidden on desktop, shown on mobile via CSS */}
+        {/* Hamburger */}
         <button className="nav-hamburger" onClick={() => setMenuOpen(true)} aria-label="Ouvrir le menu">
           <span style={{ display:"block", width:24, height:2, background:barColor, borderRadius:1 }}/>
           <span style={{ display:"block", width:24, height:2, background:barColor, borderRadius:1 }}/>
@@ -205,17 +266,17 @@ function NavBar({ scrolled }) {
             position:"absolute", top:24, right:28, background:"none", border:"none",
             color:C.ivory, fontSize:32, cursor:"pointer", lineHeight:1,
           }}>✕</button>
-          {["Soins","Ingrédients","Histoire","Boutique"].map(item => (
-            <a key={item} href="#" onClick={() => setMenuOpen(false)} style={{
+          {NAV_LINKS.map(({ label, href }) => (
+            <a key={label} href={href} onClick={() => setMenuOpen(false)} style={{
               fontFamily:"'Jost',sans-serif", fontSize:13, letterSpacing:"0.22em",
               color:C.ivory, textDecoration:"none", fontWeight:300,
-            }}>{item.toUpperCase()}</a>
+            }}>{label.toUpperCase()}</a>
           ))}
-          <button onClick={() => setMenuOpen(false)} style={{
+          <a href={waUrl} target="_blank" rel="noopener noreferrer" onClick={() => setMenuOpen(false)} style={{
             background:C.ocre, color:C.ivory, border:"none", borderRadius:2,
             padding:"14px 40px", fontFamily:"'Jost',sans-serif", fontSize:11,
-            letterSpacing:"0.2em", cursor:"pointer", marginTop:8,
-          }}>COMMANDER</button>
+            letterSpacing:"0.2em", cursor:"pointer", textDecoration:"none", marginTop:8,
+          }}>COMMANDER</a>
         </div>
       )}
     </nav>
@@ -226,6 +287,7 @@ function NavBar({ scrolled }) {
 function HeroSection() {
   const [loaded, setLoaded] = useState(false);
   useEffect(() => { setTimeout(() => setLoaded(true), 100); }, []);
+  const waUrl = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent("Bonjour, je souhaite découvrir les soins Care Yelli")}`;
   return (
     <section style={{
       minHeight:"100vh", position:"relative", overflow:"hidden",
@@ -233,14 +295,14 @@ function HeroSection() {
       display:"flex", alignItems:"center",
     }}>
       <ZelligePattern opacity={0.05}/>
-      {/* Arch — hidden on mobile */}
+      {/* Arch */}
       <div className="hero-arch" style={{
         position:"absolute", right:"8%", top:"50%", transform:"translateY(-50%)",
         width:420, height:560, borderRadius:"210px 210px 0 0",
         border:`1px solid rgba(196,114,74,0.25)`,
         opacity: loaded?1:0, transition:"opacity 1.5s ease 0.3s",
       }}/>
-      {/* Product jar — hidden on mobile */}
+      {/* Jar */}
       <div className="hero-jar-wrap" style={{
         position:"absolute", right:"11%", top:"50%", transform:"translateY(-50%)",
         opacity: loaded?1:0, transition:"opacity 1.5s ease 0.8s",
@@ -250,7 +312,7 @@ function HeroSection() {
           filter:"drop-shadow(0 40px 60px rgba(0,0,0,0.4))",
         }}/>
       </div>
-      {/* Content — full width on mobile */}
+      {/* Content */}
       <div className="hero-content" style={{
         position:"relative", zIndex:2, padding:"0 6%", maxWidth:680,
         opacity: loaded?1:0, transform: loaded?"none":"translateY(30px)",
@@ -266,9 +328,9 @@ function HeroSection() {
           Des soins enracinés dans la tradition berbère et africaine. Huile d\'argan, oliban, figue de barbarie — les secrets de beauté que nos mères nous ont confiés.
         </p>
         <div style={{ display:"flex", gap:16, alignItems:"center", flexWrap:"wrap" }}>
-          <button style={{ background:C.ocre, color:C.ivory, border:"none", borderRadius:2, padding:"16px 40px", fontFamily:"'Jost',sans-serif", fontSize:11, letterSpacing:"0.25em", cursor:"pointer" }}>DÉCOUVRIR LES SOINS</button>
-          <a href="#" style={{ fontFamily:"'Jost',sans-serif", fontSize:11, letterSpacing:"0.2em", color:"rgba(237,229,216,0.6)", textDecoration:"none", fontWeight:300, display:"flex", alignItems:"center", gap:10 }}>
-            NOTRE HISTOIRE <span style={{ display:"inline-block", width:30, height:1, background:"currentColor" }}/>
+          <a href="#soins" style={{ background:C.ocre, color:C.ivory, border:"none", borderRadius:2, padding:"16px 40px", fontFamily:"'Jost',sans-serif", fontSize:11, letterSpacing:"0.25em", cursor:"pointer", textDecoration:"none" }}>DÉCOUVRIR LES SOINS</a>
+          <a href={waUrl} target="_blank" rel="noopener noreferrer" style={{ fontFamily:"'Jost',sans-serif", fontSize:11, letterSpacing:"0.2em", color:"rgba(237,229,216,0.6)", textDecoration:"none", fontWeight:300, display:"flex", alignItems:"center", gap:10 }}>
+            COMMANDER <span style={{ display:"inline-block", width:30, height:1, background:"currentColor" }}/>
           </a>
         </div>
         <div style={{ display:"flex", gap:48, marginTop:72, borderTop:`1px solid rgba(196,114,74,0.2)`, paddingTop:32, flexWrap:"wrap" }}>
@@ -287,7 +349,7 @@ function HeroSection() {
 // ─── Philosophy ───────────────────────────────────────────────────
 function PhilosophySection() {
   return (
-    <section className="section-pad" style={{ background:C.ivory, padding:"120px 6%", position:"relative", overflow:"hidden" }}>
+    <section id="histoire" className="section-pad" style={{ background:C.ivory, padding:"120px 6%", position:"relative", overflow:"hidden" }}>
       <div style={{ position:"absolute", left:-80, top:"50%", transform:"translateY(-50%)", fontFamily:"'Cormorant Garamond',serif", fontSize:200, color:C.cream, fontWeight:300, lineHeight:1, userSelect:"none" }}>يلي</div>
       <div className="g2" style={{ maxWidth:1200, margin:"0 auto", gap:80, alignItems:"center", position:"relative", zIndex:1 }}>
         <div>
@@ -304,7 +366,6 @@ function PhilosophySection() {
             Nos formules s\'ancrent dans ce patrimoine vivant, enrichi par les savoirs des femmes du Souss, des souks de Marrakech et des caravanes sahariennes.
           </p>
         </div>
-        {/* Photo lifestyle */}
         <div style={{ position:"relative" }}>
           <div style={{ borderRadius:4, overflow:"hidden", position:"relative" }}>
             <img src={IMG_PHILOSOPHIE} alt="Rituel de soin" style={{ width:"100%", height:480, objectFit:"cover", objectPosition:"center", display:"block" }}/>
@@ -323,13 +384,131 @@ function PhilosophySection() {
   );
 }
 
+// ─── Product Modal ────────────────────────────────────────────────
+function ProductModal({ product, onClose }) {
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    const onKey = (e) => { if (e.key === "Escape") onClose(); };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [onClose]);
+
+  const waUrl = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(`Bonjour, je souhaite commander le soin ${product.name} - Care Yelli`)}`;
+
+  return (
+    <div
+      onClick={onClose}
+      style={{
+        position:"fixed", inset:0, zIndex:400,
+        background:"rgba(46,30,18,0.75)", display:"flex",
+        alignItems:"center", justifyContent:"center", padding:"20px",
+      }}
+    >
+      <div
+        onClick={e => e.stopPropagation()}
+        style={{
+          background:C.ivory, borderRadius:4, maxWidth:860, width:"100%",
+          maxHeight:"92vh", overflow:"auto", position:"relative",
+        }}
+      >
+        {/* Close */}
+        <button onClick={onClose} style={{
+          position:"sticky", top:0, float:"right", zIndex:10,
+          margin:"16px 16px 0 0",
+          background:"rgba(46,30,18,0.07)", border:"none", borderRadius:"50%",
+          width:36, height:36, fontSize:16, cursor:"pointer", color:C.dark,
+          display:"flex", alignItems:"center", justifyContent:"center",
+        }}>✕</button>
+
+        <div className="modal-grid" style={{ gap:0 }}>
+          {/* Image */}
+          <div className="modal-img" style={{
+            background:C.cream, display:"flex", alignItems:"center",
+            justifyContent:"center", padding:40, minHeight:360, position:"relative",
+          }}>
+            <ZelligePattern opacity={0.04}/>
+            <img src={product.image} alt={product.name} style={{
+              width:"100%", maxWidth:280, height:"auto", objectFit:"contain",
+              position:"relative", zIndex:1,
+            }}/>
+            <div style={{
+              position:"absolute", bottom:20, left:20,
+              background:product.color, color:C.ivory, borderRadius:40,
+              padding:"4px 14px", fontFamily:"'Jost',sans-serif",
+              fontSize:9, letterSpacing:"0.2em",
+            }}>{product.label.toUpperCase()}</div>
+          </div>
+
+          {/* Details */}
+          <div style={{ padding:"40px 36px 40px" }}>
+            <div style={{ fontFamily:"'Jost',sans-serif", fontSize:9, letterSpacing:"0.4em", color:product.color, marginBottom:8 }}>{product.tagline.toUpperCase()}</div>
+            <h2 style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:"clamp(26px,3.5vw,36px)", fontWeight:400, color:C.dark, margin:"0 0 4px" }}>{product.name}</h2>
+            <p style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:16, fontStyle:"italic", color:C.gold, margin:"0 0 20px" }}>{product.subtitle}</p>
+            <p style={{ fontFamily:"'Jost',sans-serif", fontSize:13, fontWeight:300, color:C.darkMid, lineHeight:1.8, margin:"0 0 24px" }}>{product.description}</p>
+
+            {/* Bénéfices */}
+            <div style={{ marginBottom:24 }}>
+              <div style={{ fontFamily:"'Jost',sans-serif", fontSize:9, letterSpacing:"0.3em", color:product.color, marginBottom:12 }}>BÉNÉFICES</div>
+              {product.benefits.map(b => (
+                <div key={b} style={{ display:"flex", alignItems:"center", gap:10, marginBottom:8 }}>
+                  <span style={{ width:6, height:6, borderRadius:"50%", background:product.color, flexShrink:0 }}/>
+                  <span style={{ fontFamily:"'Jost',sans-serif", fontSize:13, fontWeight:300, color:C.darkMid }}>{b}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Mode d'emploi */}
+            <div style={{ marginBottom:24 }}>
+              <div style={{ fontFamily:"'Jost',sans-serif", fontSize:9, letterSpacing:"0.3em", color:product.color, marginBottom:8 }}>MODE D'EMPLOI</div>
+              <p style={{ fontFamily:"'Jost',sans-serif", fontSize:13, fontWeight:300, color:C.darkMid, lineHeight:1.8, margin:0 }}>{product.howToUse}</p>
+            </div>
+
+            {/* INCI */}
+            <div style={{ marginBottom:28, padding:16, background:C.cream, borderRadius:2 }}>
+              <div style={{ fontFamily:"'Jost',sans-serif", fontSize:9, letterSpacing:"0.3em", color:C.gold, marginBottom:8 }}>INGRÉDIENTS (INCI)</div>
+              <p style={{ fontFamily:"'Jost',sans-serif", fontSize:11, fontWeight:300, color:C.darkMid, lineHeight:1.7, margin:0 }}>{product.inci}</p>
+            </div>
+
+            {/* Prix + CTA */}
+            <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", borderTop:`1px solid ${C.cream}`, paddingTop:20, gap:16, flexWrap:"wrap" }}>
+              <div>
+                <div style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:28, color:C.dark, fontWeight:400 }}>{product.price}</div>
+                <div style={{ fontFamily:"'Jost',sans-serif", fontSize:9, color:C.gold, letterSpacing:"0.15em" }}>{product.size} — {product.skin}</div>
+              </div>
+              <a
+                href={waUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  background:product.color, color:C.ivory, border:"none", borderRadius:2,
+                  padding:"14px 28px", fontFamily:"'Jost',sans-serif",
+                  fontSize:10, letterSpacing:"0.2em", cursor:"pointer",
+                  textDecoration:"none", display:"inline-flex", alignItems:"center", gap:8,
+                }}
+              >
+                <span>📱</span> COMMANDER VIA WHATSAPP
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ─── Product Card ─────────────────────────────────────────────────
-function ProductCard({ product }) {
+function ProductCard({ product, onOpen }) {
   const [hovered, setHovered] = useState(false);
+  const waUrl = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(`Bonjour, je souhaite commander le soin ${product.name} - Care Yelli`)}`;
+
   return (
     <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      onClick={() => onOpen(product)}
       style={{
         background:C.white, border:`1px solid ${hovered ? product.color : C.sand}`,
         borderRadius:4, overflow:"hidden",
@@ -341,17 +520,14 @@ function ProductCard({ product }) {
     >
       <div style={{ position:"relative", height:300, overflow:"hidden", background:C.cream }}>
         <ZelligePattern opacity={0.04}/>
-        <img
-          src={product.image}
-          alt={product.name}
-          style={{
-            position:"absolute", inset:0, width:"100%", height:"100%",
-            objectFit:"contain", objectPosition:"center", padding:32,
-            transform: hovered ? "scale(1.04)" : "scale(1)",
-            transition:"transform 0.5s ease",
-          }}
-        />
-        <div style={{ position:"absolute", bottom:16, left:16,
+        <img src={product.image} alt={product.name} style={{
+          position:"absolute", inset:0, width:"100%", height:"100%",
+          objectFit:"contain", objectPosition:"center", padding:32,
+          transform: hovered ? "scale(1.04)" : "scale(1)",
+          transition:"transform 0.5s ease",
+        }}/>
+        <div style={{
+          position:"absolute", bottom:16, left:16,
           background:product.color, color:C.ivory, borderRadius:40,
           padding:"4px 14px", fontFamily:"'Jost',sans-serif",
           fontSize:9, letterSpacing:"0.2em", fontWeight:300,
@@ -367,13 +543,20 @@ function ProductCard({ product }) {
             <div style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:22, color:C.dark, fontWeight:400 }}>{product.price}</div>
             <div style={{ fontFamily:"'Jost',sans-serif", fontSize:9, color:C.gold, letterSpacing:"0.15em" }}>{product.size}</div>
           </div>
-          <button style={{
-            background: hovered ? product.color : "transparent",
-            color: hovered ? C.ivory : product.color,
-            border:`1px solid ${product.color}`, borderRadius:2,
-            padding:"10px 20px", fontFamily:"'Jost',sans-serif",
-            fontSize:10, letterSpacing:"0.2em", cursor:"pointer", transition:"all 0.3s ease",
-          }}>AJOUTER</button>
+          <a
+            href={waUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={e => e.stopPropagation()}
+            style={{
+              background: hovered ? product.color : "transparent",
+              color: hovered ? C.ivory : product.color,
+              border:`1px solid ${product.color}`, borderRadius:2,
+              padding:"10px 20px", fontFamily:"'Jost',sans-serif",
+              fontSize:10, letterSpacing:"0.2em", cursor:"pointer",
+              textDecoration:"none", transition:"all 0.3s ease",
+            }}
+          >AJOUTER</a>
         </div>
       </div>
     </div>
@@ -381,9 +564,9 @@ function ProductCard({ product }) {
 }
 
 // ─── Products section ─────────────────────────────────────────────
-function ProductsSection() {
+function ProductsSection({ onOpen }) {
   return (
-    <section className="section-pad" style={{ background:C.cream, padding:"120px 6%", position:"relative" }}>
+    <section id="soins" className="section-pad" style={{ background:C.cream, padding:"120px 6%", position:"relative" }}>
       <ZelligePattern opacity={0.04}/>
       <div style={{ maxWidth:1200, margin:"0 auto", position:"relative", zIndex:1 }}>
         <div style={{ textAlign:"center", marginBottom:72 }}>
@@ -394,12 +577,17 @@ function ProductsSection() {
           </p>
         </div>
         <div className="g3" style={{ gap:28 }}>
-          {PRODUCTS.map(p => <ProductCard key={p.id} product={p}/>)}
+          {PRODUCTS.map(p => <ProductCard key={p.id} product={p} onOpen={onOpen}/>)}
         </div>
         <div style={{ textAlign:"center", marginTop:56 }}>
-          <button style={{ background:"transparent", color:C.dark, border:`1px solid ${C.dark}`, borderRadius:2, padding:"16px 48px", fontFamily:"'Jost',sans-serif", fontSize:11, letterSpacing:"0.25em", cursor:"pointer" }}>
+          <a href={`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent("Bonjour, je souhaite voir toute la gamme Care Yelli")}`} target="_blank" rel="noopener noreferrer" style={{
+            display:"inline-block", background:"transparent", color:C.dark,
+            border:`1px solid ${C.dark}`, borderRadius:2, padding:"16px 48px",
+            fontFamily:"'Jost',sans-serif", fontSize:11, letterSpacing:"0.25em",
+            cursor:"pointer", textDecoration:"none",
+          }}>
             VOIR TOUTE LA GAMME
-          </button>
+          </a>
         </div>
       </div>
     </section>
@@ -414,26 +602,19 @@ function IngredientCard({ ing }) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
-        borderRadius:4, overflow:"hidden", position:"relative",
-        cursor:"pointer",
+        borderRadius:4, overflow:"hidden", position:"relative", cursor:"pointer",
         transform: hovered ? "translateY(-4px)" : "none",
         transition:"transform 0.35s ease",
         boxShadow: hovered ? "0 20px 48px rgba(0,0,0,0.12)" : "none",
       }}
     >
       <div style={{ height:220, overflow:"hidden", position:"relative" }}>
-        <img
-          src={ing.image}
-          alt={ing.name}
-          style={{
-            width:"100%", height:"100%",
-            objectFit:"cover",
-            objectPosition: ing.objectPosition || "center",
-            transform: hovered ? "scale(1.07)" : "scale(1)",
-            transition:"transform 0.5s ease",
-            display:"block",
-          }}
-        />
+        <img src={ing.image} alt={ing.name} style={{
+          width:"100%", height:"100%", objectFit:"cover",
+          objectPosition: ing.objectPosition || "center",
+          transform: hovered ? "scale(1.07)" : "scale(1)",
+          transition:"transform 0.5s ease", display:"block",
+        }}/>
         <div style={{ position:"absolute", inset:0, background: hovered ? "rgba(46,30,18,0.45)" : "rgba(46,30,18,0.25)", transition:"background 0.35s ease" }}/>
         <div style={{
           position:"absolute", top:14, left:14,
@@ -453,7 +634,7 @@ function IngredientCard({ ing }) {
 
 function IngredientsSection() {
   return (
-    <section className="section-pad" style={{ background:C.ivory, padding:"120px 6%" }}>
+    <section id="ingredients" className="section-pad" style={{ background:C.ivory, padding:"120px 6%" }}>
       <div style={{ maxWidth:1200, margin:"0 auto" }}>
         <div style={{ textAlign:"center", marginBottom:72 }}>
           <div style={{ fontFamily:"'Jost',sans-serif", fontSize:10, letterSpacing:"0.5em", color:C.ocre, marginBottom:20, display:"flex", alignItems:"center", justifyContent:"center", gap:16 }}>
@@ -467,13 +648,54 @@ function IngredientsSection() {
         <div className="gi" style={{ gap:24 }}>
           {INGREDIENTS.map(ing => <IngredientCard key={ing.name} ing={ing}/>)}
         </div>
-        {/* Stat banner */}
         <div className="stat-banner" style={{ marginTop:56, background:C.ocre, borderRadius:4, padding:"40px 48px", display:"flex", alignItems:"center", justifyContent:"space-between" }}>
           <div style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:"clamp(36px,6vw,48px)", color:C.ivory, fontWeight:300 }}>1T</div>
           <div style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:20, color:"rgba(253,250,246,0.85)", fontStyle:"italic", maxWidth:400, lineHeight:1.5 }}>
             de fruits de figue de barbarie pour obtenir un litre d\'huile précieuse
           </div>
           <div style={{ fontFamily:"'Jost',sans-serif", fontSize:10, color:"rgba(253,250,246,0.6)", letterSpacing:"0.2em" }}>HAUT ATLAS · MAROC</div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── Reviews ─────────────────────────────────────────────────────
+function ReviewsSection() {
+  return (
+    <section className="section-pad" style={{ background:C.cream, padding:"120px 6%", position:"relative", overflow:"hidden" }}>
+      <ZelligePattern opacity={0.04}/>
+      <div style={{ maxWidth:1200, margin:"0 auto", position:"relative", zIndex:1 }}>
+        <div style={{ textAlign:"center", marginBottom:64 }}>
+          <div style={{ fontFamily:"'Jost',sans-serif", fontSize:10, letterSpacing:"0.5em", color:C.ocre, marginBottom:20, display:"flex", alignItems:"center", justifyContent:"center", gap:16 }}>
+            <span style={{ width:30, height:1, background:C.ocre, display:"inline-block" }}/> TÉMOIGNAGES <span style={{ width:30, height:1, background:C.ocre, display:"inline-block" }}/>
+          </div>
+          <h2 style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:"clamp(28px,4vw,54px)", color:C.dark, fontWeight:400, margin:0 }}>Elles ont essayé. <em>Elles ont aimé.</em></h2>
+        </div>
+        <div className="g3" style={{ gap:28 }}>
+          {REVIEWS.map((r, i) => (
+            <div key={i} style={{ background:C.ivory, borderRadius:4, padding:"36px 32px", position:"relative" }}>
+              <div style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:48, color:C.sand, lineHeight:1, position:"absolute", top:16, left:28, opacity:0.6 }}>"</div>
+              {/* Étoiles */}
+              <div style={{ display:"flex", gap:4, marginBottom:20 }}>
+                {Array.from({length:5}).map((_,s) => (
+                  <span key={s} style={{ color: s < r.stars ? C.gold : C.sand, fontSize:14 }}>★</span>
+                ))}
+              </div>
+              <p style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:18, fontStyle:"italic", color:C.dark, lineHeight:1.7, margin:"0 0 24px", position:"relative", zIndex:1 }}>
+                « {r.text} »
+              </p>
+              <div style={{ display:"flex", alignItems:"center", gap:12, borderTop:`1px solid ${C.cream}`, paddingTop:20 }}>
+                <div style={{ width:36, height:36, borderRadius:"50%", background:C.ocre, display:"flex", alignItems:"center", justifyContent:"center", fontFamily:"'Cormorant Garamond',serif", fontSize:16, color:C.ivory, flexShrink:0 }}>
+                  {r.name[0]}
+                </div>
+                <div>
+                  <div style={{ fontFamily:"'Jost',sans-serif", fontSize:11, color:C.dark, fontWeight:400 }}>{r.name}</div>
+                  <div style={{ fontFamily:"'Jost',sans-serif", fontSize:9, color:C.gold, letterSpacing:"0.15em", marginTop:2 }}>{r.city.toUpperCase()}</div>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
@@ -509,37 +731,90 @@ function ValuesSection() {
   );
 }
 
-// ─── Newsletter ───────────────────────────────────────────────────
+// ─── Contact / Newsletter ─────────────────────────────────────────
 function NewsletterSection() {
-  const [email, setEmail] = useState("");
-  const [sent, setSent] = useState(false);
+  const [form, setForm] = useState({ email:"", prenom:"", message:"" });
+  const [status, setStatus] = useState("idle"); // idle | loading | success | error
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus("loading");
+    try {
+      const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify(form),
+      });
+      setStatus(res.ok ? "success" : "error");
+    } catch {
+      setStatus("error");
+    }
+  };
+
+  const inputStyle = {
+    width:"100%", padding:"14px 18px", border:`1px solid ${C.sand}`,
+    borderRadius:2, fontFamily:"'Jost',sans-serif", fontSize:13,
+    background:C.ivory, color:C.dark, outline:"none", display:"block",
+  };
+
   return (
-    <section className="section-pad" style={{ background:C.cream, padding:"100px 6%", position:"relative", overflow:"hidden" }}>
+    <section id="boutique" className="section-pad" style={{ background:C.cream, padding:"100px 6%", position:"relative", overflow:"hidden" }}>
       <ZelligePattern opacity={0.06}/>
-      <div style={{ maxWidth:640, margin:"0 auto", textAlign:"center", position:"relative", zIndex:1 }}>
+      <div style={{ maxWidth:560, margin:"0 auto", textAlign:"center", position:"relative", zIndex:1 }}>
         <div style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:32, color:C.ocre, marginBottom:16, opacity:0.5 }}>✦</div>
         <h2 style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:"clamp(28px,5vw,42px)", color:C.dark, fontWeight:400, margin:"0 0 16px" }}>Rejoignez la communauté <em>Yelli</em></h2>
         <p style={{ fontFamily:"'Jost',sans-serif", fontSize:14, fontWeight:300, color:C.darkMid, lineHeight:1.8, marginBottom:40 }}>
           Rituels de soin, coulisses de nos formules, conseils des coopératives — la lettre qui sent bon l\'argan.
         </p>
-        {!sent ? (
-          <div className="newsletter-form" style={{ display:"flex", maxWidth:440, margin:"0 auto" }}>
+
+        {status === "success" ? (
+          <div style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:20, color:C.ocre, fontStyle:"italic" }}>
+            Merci ! Votre message a bien été envoyé ✦
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} style={{ display:"flex", flexDirection:"column", gap:12, textAlign:"left" }}>
+            <input
+              type="text"
+              placeholder="Votre prénom"
+              value={form.prenom}
+              onChange={e => setForm({ ...form, prenom: e.target.value })}
+              required
+              style={inputStyle}
+            />
             <input
               type="email"
               placeholder="Votre adresse e-mail"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-              className="newsletter-input"
-              style={{ flex:1, padding:"14px 20px", border:`1px solid ${C.sand}`, borderRight:"none", borderRadius:"2px 0 0 2px", fontFamily:"'Jost',sans-serif", fontSize:13, background:C.ivory, color:C.dark, outline:"none" }}
+              value={form.email}
+              onChange={e => setForm({ ...form, email: e.target.value })}
+              required
+              style={inputStyle}
             />
+            <textarea
+              placeholder="Message (optionnel)"
+              value={form.message}
+              onChange={e => setForm({ ...form, message: e.target.value })}
+              rows={4}
+              style={{ ...inputStyle, resize:"vertical" }}
+            />
+            {status === "error" && (
+              <p style={{ fontFamily:"'Jost',sans-serif", fontSize:12, color:"#c0392b", margin:0, textAlign:"center" }}>
+                Une erreur est survenue. Veuillez réessayer.
+              </p>
+            )}
             <button
-              onClick={() => { if(email) setSent(true); }}
-              className="newsletter-btn"
-              style={{ background:C.ocre, color:C.ivory, border:"none", borderRadius:"0 2px 2px 0", padding:"14px 28px", fontFamily:"'Jost',sans-serif", fontSize:10, letterSpacing:"0.2em", cursor:"pointer" }}
-            >S\'ABONNER</button>
-          </div>
-        ) : (
-          <div style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:20, color:C.ocre, fontStyle:"italic" }}>Bienvenue dans la famille Yelli ✦</div>
+              type="submit"
+              disabled={status === "loading"}
+              style={{
+                background: status === "loading" ? C.sand : C.ocre,
+                color:C.ivory, border:"none", borderRadius:2,
+                padding:"14px 32px", fontFamily:"'Jost',sans-serif",
+                fontSize:10, letterSpacing:"0.2em", cursor: status === "loading" ? "default" : "pointer",
+                transition:"background 0.3s ease",
+              }}
+            >
+              {status === "loading" ? "ENVOI EN COURS…" : "ENVOYER"}
+            </button>
+          </form>
         )}
       </div>
     </section>
@@ -552,7 +827,6 @@ function Footer() {
     <footer style={{ background:C.dark, padding:"64px 6% 40px" }}>
       <div style={{ maxWidth:1200, margin:"0 auto" }}>
         <div className="gf" style={{ gap:48, marginBottom:56 }}>
-          {/* Logo + description — always visible */}
           <div>
             <div style={{ fontFamily:"'Cormorant Garamond',serif", marginBottom:16 }}>
               <div style={{ fontSize:9, letterSpacing:"0.3em", color:C.gold, marginBottom:2 }}>CARE</div>
@@ -564,16 +838,15 @@ function Footer() {
             </p>
             <p style={{ fontFamily:"'Jost',sans-serif", fontSize:11, color:C.ocre, marginTop:16 }}>Agadir, Maroc 🇲🇦</p>
           </div>
-          {/* Link columns — hidden on 480px */}
           {[
-            { title:"Soins", links:["Éclat du Teint","Soin Hydratant","Anti-Âge Raffermissant","Toute la gamme"] },
-            { title:"La Marque", links:["Notre Histoire","Nos Ingrédients","Coopératives","Blog"] },
-            { title:"Service", links:["FAQ","Livraison","Retours","Contact"] },
+            { title:"Soins",     links:[["Éclat du Teint","#soins"],["Soin Hydratant","#soins"],["Anti-Âge Raffermissant","#soins"],["Toute la gamme","#soins"]] },
+            { title:"La Marque", links:[["Notre Histoire","#histoire"],["Nos Ingrédients","#ingredients"],["Coopératives","#histoire"],["Blog","#"]] },
+            { title:"Service",   links:[["FAQ","#"],["Livraison","#"],["Retours","#"],["Contact","#boutique"]] },
           ].map(col => (
             <div key={col.title} className="footer-col-links">
               <div style={{ fontFamily:"'Jost',sans-serif", fontSize:10, letterSpacing:"0.3em", color:C.gold, marginBottom:20 }}>{col.title.toUpperCase()}</div>
-              {col.links.map(link => (
-                <div key={link} style={{ fontFamily:"'Jost',sans-serif", fontSize:12, fontWeight:300, color:"rgba(237,229,216,0.5)", marginBottom:10, cursor:"pointer" }}>{link}</div>
+              {col.links.map(([label, href]) => (
+                <a key={label} href={href} style={{ display:"block", fontFamily:"'Jost',sans-serif", fontSize:12, fontWeight:300, color:"rgba(237,229,216,0.5)", marginBottom:10, textDecoration:"none", cursor:"pointer" }}>{label}</a>
               ))}
             </div>
           ))}
@@ -587,27 +860,68 @@ function Footer() {
   );
 }
 
+// ─── Cookie Banner ────────────────────────────────────────────────
+function CookieBanner() {
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    if (!localStorage.getItem("yelli_cookies")) setVisible(true);
+  }, []);
+  if (!visible) return null;
+  return (
+    <div style={{
+      position:"fixed", bottom:0, left:0, right:0, zIndex:500,
+      background:C.dark, padding:"16px 6%",
+      display:"flex", alignItems:"center", justifyContent:"space-between",
+      gap:16, flexWrap:"wrap", borderTop:`1px solid rgba(196,114,74,0.2)`,
+    }}>
+      <p style={{ fontFamily:"'Jost',sans-serif", fontSize:12, fontWeight:300, color:"rgba(237,229,216,0.65)", margin:0, lineHeight:1.6 }}>
+        Ce site utilise des cookies pour améliorer votre expérience.{" "}
+        <a href="#" style={{ color:C.goldLight, textDecoration:"underline" }}>En savoir plus</a>
+      </p>
+      <button
+        onClick={() => { localStorage.setItem("yelli_cookies", "1"); setVisible(false); }}
+        style={{
+          background:C.ocre, color:C.ivory, border:"none", borderRadius:2,
+          padding:"8px 28px", fontFamily:"'Jost',sans-serif",
+          fontSize:10, letterSpacing:"0.2em", cursor:"pointer", whiteSpace:"nowrap", flexShrink:0,
+        }}
+      >ACCEPTER</button>
+    </div>
+  );
+}
+
 // ─── App ──────────────────────────────────────────────────────────
 export default function CareYelliWebsite() {
   const [scrolled, setScrolled] = useState(false);
+  const [modalProduct, setModalProduct] = useState(null);
+
   useEffect(() => {
     const h = () => setScrolled(window.scrollY > 60);
     window.addEventListener("scroll", h);
     return () => window.removeEventListener("scroll", h);
   }, []);
+
   return (
     <>
       <style>{FONTS}</style>
-      <style>{`* { margin:0; padding:0; box-sizing:border-box; } body { background:${C.ivory}; } button:hover { opacity:0.88; } ::-webkit-scrollbar { width:4px; } ::-webkit-scrollbar-track { background:${C.cream}; } ::-webkit-scrollbar-thumb { background:${C.ocre}; border-radius:2px; }`}</style>
+      <style>{`* { margin:0; padding:0; box-sizing:border-box; } body { background:${C.ivory}; } a:hover,button:hover { opacity:0.88; } ::-webkit-scrollbar { width:4px; } ::-webkit-scrollbar-track { background:${C.cream}; } ::-webkit-scrollbar-thumb { background:${C.ocre}; border-radius:2px; }`}</style>
       <style>{RESPONSIVE_CSS}</style>
+
+      <TrustBar/>
       <NavBar scrolled={scrolled}/>
       <HeroSection/>
       <PhilosophySection/>
-      <ProductsSection/>
+      <ProductsSection onOpen={setModalProduct}/>
       <IngredientsSection/>
+      <ReviewsSection/>
       <ValuesSection/>
       <NewsletterSection/>
       <Footer/>
+      <CookieBanner/>
+
+      {modalProduct && (
+        <ProductModal product={modalProduct} onClose={() => setModalProduct(null)}/>
+      )}
     </>
   );
 }

@@ -4,11 +4,81 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Care Yelli — Soins naturels du terroir marocain. Huile d'argan, oliban, figue de barbarie. Beldi & chic." />
-    <meta property="og:title" content="Care Yelli — يلي" />
-    <meta property="og:description" content="Transmis de mère en fille. Soins naturels bio inspirés de la tradition berbère." />
-    <meta property="og:image" content="/og-image.jpg" />
-    <title>Care Yelli — يلي | Soins Naturels Marocains</title>
+
+    <!-- SEO primaire -->
+    <title>Care Yelli — يلي | Soins Naturels Marocains · Argan, Oliban, Figue de Barbarie</title>
+    <meta name="description" content="Care Yelli — soins naturels du terroir marocain transmis de mère en fille. Huile d'argan bio, oliban, figue de barbarie. Beldi & chic. Livraison à Agadir, paiement à la livraison." />
+    <meta name="keywords" content="soin naturel maroc, argan bio, oliban, figue de barbarie, crème visage maroc, cosmétique berbère, care yelli" />
+    <link rel="canonical" href="https://yellicare.vercel.app/" />
+
+    <!-- Open Graph -->
+    <meta property="og:type"        content="website" />
+    <meta property="og:url"         content="https://yellicare.vercel.app/" />
+    <meta property="og:title"       content="Care Yelli — يلي | Soins Naturels Marocains" />
+    <meta property="og:description" content="Transmis de mère en fille. Soins naturels bio inspirés de la tradition berbère. Argan, oliban, figue de barbarie." />
+    <meta property="og:image"       content="https://yellicare.vercel.app/images/jar.jpg" />
+    <meta property="og:locale"      content="fr_MA" />
+    <meta property="og:site_name"   content="Care Yelli" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card"        content="summary_large_image" />
+    <meta name="twitter:title"       content="Care Yelli — Soins Naturels Marocains" />
+    <meta name="twitter:description" content="Transmis de mère en fille. Argan, oliban, figue de barbarie — les secrets de beauté berbères." />
+    <meta name="twitter:image"       content="https://yellicare.vercel.app/images/jar.jpg" />
+
+    <!-- Schema JSON-LD : Organisation -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Care Yelli",
+      "url": "https://yellicare.vercel.app/",
+      "logo": "https://yellicare.vercel.app/images/jar.jpg",
+      "description": "Soins naturels du terroir marocain — argan, oliban, figue de barbarie.",
+      "address": { "@type": "PostalAddress", "addressLocality": "Agadir", "addressCountry": "MA" }
+    }
+    </script>
+
+    <!-- Schema JSON-LD : Produits -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "name": "Collection Yelli",
+      "itemListElement": [
+        {
+          "@type": "ListItem", "position": 1,
+          "item": {
+            "@type": "Product",
+            "name": "Éclat du Teint — Renouvellement Cellulaire",
+            "description": "Soin purifiant et apaisant à l'oliban, collagène et résine de Boswellia.",
+            "brand": { "@type": "Brand", "name": "Care Yelli" },
+            "offers": { "@type": "Offer", "price": "240", "priceCurrency": "MAD", "availability": "https://schema.org/InStock" }
+          }
+        },
+        {
+          "@type": "ListItem", "position": 2,
+          "item": {
+            "@type": "Product",
+            "name": "Soin Hydratant — Unifiant au Nila Pur",
+            "description": "Soin hydratant et unifiant à l'huile d'argan bio, nila et indigo naturel.",
+            "brand": { "@type": "Brand", "name": "Care Yelli" },
+            "offers": { "@type": "Offer", "price": "210", "priceCurrency": "MAD", "availability": "https://schema.org/InStock" }
+          }
+        },
+        {
+          "@type": "ListItem", "position": 3,
+          "item": {
+            "@type": "Product",
+            "name": "Soin Anti-Âge — Raffermissant",
+            "description": "Soin régénérant et hydratant aux graines de figue de Barbarie, karité et cactus.",
+            "brand": { "@type": "Brand", "name": "Care Yelli" },
+            "offers": { "@type": "Offer", "price": "290", "priceCurrency": "MAD", "availability": "https://schema.org/InStock" }
+          }
+        }
+      ]
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>
