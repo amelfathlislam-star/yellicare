@@ -309,9 +309,9 @@ function HeroSection() {
         position:"absolute", right:"11%", top:"50%", transform:"translateY(-50%)",
         opacity: loaded?1:0, transition:"opacity 1.5s ease 0.8s",
       }}>
-        <img src={IMG_JAR} alt="Care Yelli" className="hero-jar-img" style={{
-          width:220, height:"auto", borderRadius:4,
-          filter:"drop-shadow(0 40px 60px rgba(0,0,0,0.4))",
+        <img src={IMG_ANTIAGE} alt="Care Yelli" className="hero-jar-img" style={{
+          width:220, height:"auto",
+          filter:"drop-shadow(0 40px 60px rgba(0,0,0,0.5))",
         }}/>
       </div>
       {/* Content */}
