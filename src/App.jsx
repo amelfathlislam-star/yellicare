@@ -32,6 +32,8 @@ const FONTS = `@import url('https://fonts.googleapis.com/css2?family=Cormorant+G
 
 const RESPONSIVE_CSS = `
   html { scroll-behavior:smooth; scroll-padding-top:108px; }
+
+  /* Grilles desktop */
   .g2  { display:grid; grid-template-columns:1fr 1fr; }
   .g3  { display:grid; grid-template-columns:repeat(3,1fr); }
   .gi  { display:grid; grid-template-columns:repeat(3,1fr); }
@@ -40,42 +42,76 @@ const RESPONSIVE_CSS = `
   .modal-grid { display:grid; grid-template-columns:1fr 1fr; }
   .nav-hamburger { display:none; flex-direction:column; gap:6px; background:none; border:none; cursor:pointer; padding:8px; }
 
+  /* ── Tablette 769-1024px ───────────────────────────────── */
   @media(max-width:1024px){
-    .g3  { grid-template-columns:repeat(2,1fr) !important; }
-    .gi  { grid-template-columns:repeat(2,1fr) !important; }
-    .g4  { grid-template-columns:repeat(2,1fr) !important; }
-    .hero-jar-img { width:160px !important; }
+    .g3 { grid-template-columns:repeat(2,1fr) !important; }
+    .gi { grid-template-columns:repeat(2,1fr) !important; }
+    .g4 { grid-template-columns:repeat(2,1fr) !important; }
   }
 
+  /* ── Mobile < 768px ────────────────────────────────────── */
   @media(max-width:768px){
+    /* Grilles → 1 colonne */
     .g2  { grid-template-columns:1fr !important; }
     .g3  { grid-template-columns:1fr !important; }
-    .gi  { grid-template-columns:repeat(2,1fr) !important; }
-    .g4  { grid-template-columns:repeat(2,1fr) !important; }
-    .gf  { grid-template-columns:repeat(2,1fr) !important; }
-    .modal-grid { grid-template-columns:1fr !important; }
-    .modal-img  { height:260px !important; }
-    .section-pad { padding:64px 5% !important; }
-    .nav-links    { display:none !important; }
-    .nav-hamburger{ display:flex !important; }
-    .hero-jar-wrap{ display:none !important; }
-    .hero-arch    { display:none !important; }
-    .hero-content { max-width:100% !important; padding-top:108px !important; }
-    .stat-banner  { flex-direction:column !important; text-align:center !important; gap:20px !important; align-items:center !important; }
+    .gi  { grid-template-columns:1fr !important; }
+    .g4  { grid-template-columns:1fr !important; }
+    .gf  { grid-template-columns:1fr !important; }
+
+    /* Modal */
+    .modal-grid   { grid-template-columns:1fr !important; }
+    .modal-img    { height:220px !important; min-height:unset !important; padding:20px 24px !important; }
+    .modal-footer { flex-direction:column !important; align-items:stretch !important; gap:16px !important; }
+    .modal-wa     { width:100% !important; justify-content:center !important; text-align:center !important; }
+
+    /* Nav */
+    .nav-links     { display:none !important; }
+    .nav-hamburger { display:flex !important; }
+    .nav-logo-img  { height:38px !important; }
+
+    /* Trust bar */
+    .trust-bar  { gap:10px !important; padding:0 12px !important; }
+    .trust-item { font-size:8px !important; letter-spacing:0.1em !important; }
+
+    /* Hero */
+    .hero-section { min-height:70vh !important; }
+    .hero-bg-img  { object-position:center !important; }
+    .hero-content { padding:108px 5% 56px !important; max-width:100% !important; }
+    .hero-cta-row { flex-direction:column !important; align-items:stretch !important; gap:12px !important; }
+    .hero-discover{ text-align:center !important; padding:18px 16px !important; }
+    .hero-order   { justify-content:center !important; }
+    .hero-stats   { gap:20px !important; flex-wrap:wrap !important; }
+
+    /* Stats band */
+    .stats-sep  { display:none !important; }
+
+    /* Sections */
+    .section-pad { padding:56px 5% !important; }
+
+    /* Philosophy */
+    .philo-offset      { display:none !important; }
+    .philo-img         { height:280px !important; }
+    .philo-frame-shadow{ display:none !important; }
+
+    /* Produits */
+    .prod-action { flex-direction:column !important; gap:12px !important; align-items:stretch !important; }
+    .prod-btn    { min-height:48px !important; text-align:center !important; display:flex !important; align-items:center !important; justify-content:center !important; }
+    .gamme-btn   { display:block !important; text-align:center !important; padding:18px 16px !important; }
+
+    /* Ingrédients */
+    .stat-banner    { flex-direction:column !important; text-align:center !important; gap:20px !important; align-items:center !important; }
+    .marbre-caption { display:none !important; }
+
+    /* Newsletter */
     .newsletter-form  { flex-direction:column !important; max-width:100% !important; }
     .newsletter-input { border-right:1px solid #D4C4B0 !important; border-radius:2px !important; }
-    .newsletter-btn   { border-radius:2px !important; width:100% !important; }
+    .newsletter-btn   { border-radius:2px !important; width:100% !important; min-height:48px !important; }
+
+    /* Footer */
     .footer-bottom    { flex-direction:column !important; gap:10px !important; text-align:center !important; }
     .footer-col-links { display:none !important; }
-    .hero-bg-img      { object-position: right center !important; }
-    .hero-content     { padding-left:5% !important; padding-right:5% !important; max-width:100% !important; }
-    .nav-logo-img     { height:38px !important; }
-  }
-
-  @media(max-width:480px){
-    .gi { grid-template-columns:1fr !important; }
-    .g4 { grid-template-columns:1fr !important; }
-    .gf { grid-template-columns:1fr !important; }
+    .footer-brand     { align-items:center !important; }
+    .footer-logo      { margin:0 auto !important; display:block !important; }
   }
 `;
 
@@ -196,13 +232,13 @@ function ZelligePattern({ opacity = 0.06 }) {
 // ─── Trust Bar ────────────────────────────────────────────────────
 function TrustBar() {
   return (
-    <div style={{
+    <div className="trust-bar" style={{
       position:"fixed", top:72, left:0, right:0, zIndex:99,
       height:36, background:C.ocre,
       display:"flex", alignItems:"center", justifyContent:"center", gap:32,
     }}>
       {["Livraison à Agadir", "Paiement à la livraison", "Produits 100% naturels"].map(item => (
-        <span key={item} style={{ fontFamily:"'Jost',sans-serif", fontSize:9, letterSpacing:"0.2em", color:C.ivory, fontWeight:300 }}>
+        <span key={item} className="trust-item" style={{ fontFamily:"'Jost',sans-serif", fontSize:9, letterSpacing:"0.2em", color:C.ivory, fontWeight:300 }}>
           ✦ {item.toUpperCase()}
         </span>
       ))}
@@ -298,7 +334,7 @@ function HeroSection() {
   const waUrl = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent("Bonjour, je souhaite découvrir les soins Care Yelli")}`;
 
   return (
-    <section style={{ position:"relative", minHeight:"100vh", overflow:"hidden", display:"flex", alignItems:"center" }}>
+    <section className="hero-section" style={{ position:"relative", minHeight:"100vh", overflow:"hidden", display:"flex", alignItems:"center" }}>
 
       {/* Image plein écran */}
       <img
@@ -349,9 +385,9 @@ function HeroSection() {
         <p style={{ fontFamily:"'Jost',sans-serif", fontSize:15, fontWeight:300, color:"rgba(237,229,216,0.82)", lineHeight:1.85, maxWidth:480, marginBottom:52 }}>
           Des soins enracinés dans la tradition berbère et africaine. Huile d\'argan, oliban, figue de barbarie — les secrets de beauté que nos mères nous ont confiés.
         </p>
-        <div style={{ display:"flex", gap:16, alignItems:"center", flexWrap:"wrap" }}>
-          <a href="#soins" style={{ background:C.ocre, color:C.ivory, border:"none", borderRadius:2, padding:"16px 36px", fontFamily:"'Jost',sans-serif", fontSize:11, letterSpacing:"0.25em", cursor:"pointer", textDecoration:"none" }}>DÉCOUVRIR LES SOINS</a>
-          <a href={waUrl} target="_blank" rel="noopener noreferrer" style={{ fontFamily:"'Jost',sans-serif", fontSize:11, letterSpacing:"0.2em", color:"rgba(237,229,216,0.65)", textDecoration:"none", fontWeight:300, display:"flex", alignItems:"center", gap:10 }}>
+        <div className="hero-cta-row" style={{ display:"flex", gap:16, alignItems:"center", flexWrap:"wrap" }}>
+          <a href="#soins" className="hero-discover" style={{ background:C.ocre, color:C.ivory, border:"none", borderRadius:2, padding:"16px 36px", fontFamily:"'Jost',sans-serif", fontSize:11, letterSpacing:"0.25em", cursor:"pointer", textDecoration:"none", minHeight:48, display:"inline-flex", alignItems:"center", justifyContent:"center" }}>DÉCOUVRIR LES SOINS</a>
+          <a href={waUrl} target="_blank" rel="noopener noreferrer" className="hero-order" style={{ fontFamily:"'Jost',sans-serif", fontSize:11, letterSpacing:"0.2em", color:"rgba(237,229,216,0.65)", textDecoration:"none", fontWeight:300, display:"flex", alignItems:"center", gap:10, minHeight:48 }}>
             COMMANDER <span style={{ display:"inline-block", width:30, height:1, background:"currentColor" }}/>
           </a>
         </div>
@@ -370,28 +406,27 @@ const STATS = [
 
 function StatsBand() {
   return (
-    <div style={{
+    <div className="stats-band" style={{
       background: C.ocre,
       display:"flex", alignItems:"stretch", justifyContent:"center",
       width:"100%",
     }}>
       {STATS.map((s, i) => (
-        <>
+        <>{/* eslint-disable-line react/jsx-key */}
           {i > 0 && (
-            <div key={`sep-${i}`} style={{
+            <div key={`sep-${i}`} className="stats-sep" style={{
               width:1, background:"rgba(255,255,255,0.25)",
-              margin:"16px 0",
-              flexShrink:0,
+              margin:"16px 0", flexShrink:0,
             }}/>
           )}
-          <div key={s.l} style={{
+          <div key={s.l} className="stats-cell" style={{
             flex:1, display:"flex", flexDirection:"column",
             alignItems:"center", justifyContent:"center",
             padding:"22px 16px",
           }}>
             <div style={{
               fontFamily:"'Cormorant Garamond',serif",
-              fontSize:"clamp(28px,4vw,44px)",
+              fontSize:"clamp(26px,4vw,44px)",
               color:C.ivory, fontWeight:500, lineHeight:1,
               marginBottom:7,
             }}>{s.n}</div>
@@ -412,7 +447,7 @@ function StatsBand() {
 function PhilosophySection() {
   return (
     <section id="histoire" className="section-pad" style={{ background:C.ivory, padding:"120px 6%", position:"relative", overflow:"hidden" }}>
-      <div style={{ position:"absolute", left:-80, top:"50%", transform:"translateY(-50%)", fontFamily:"'Cormorant Garamond',serif", fontSize:200, color:C.cream, fontWeight:300, lineHeight:1, userSelect:"none" }}>يلي</div>
+      <div className="philo-offset" style={{ position:"absolute", left:-80, top:"50%", transform:"translateY(-50%)", fontFamily:"'Cormorant Garamond',serif", fontSize:200, color:C.cream, fontWeight:300, lineHeight:1, userSelect:"none" }}>يلي</div>
       <div className="g2" style={{ maxWidth:1200, margin:"0 auto", gap:80, alignItems:"center", position:"relative", zIndex:1 }}>
         <div>
           <div style={{ fontFamily:"'Jost',sans-serif", fontSize:10, letterSpacing:"0.5em", color:C.ocre, marginBottom:24, fontWeight:300, display:"flex", alignItems:"center", gap:16 }}>
@@ -434,6 +469,7 @@ function PhilosophySection() {
               src={IMG_PHILOSOPHIE}
               alt="Mains appliquant un soin Yelli Care — rituel de beauté berbère"
               loading="lazy"
+              className="philo-img"
               style={{ width:"100%", height:480, objectFit:"cover", objectPosition:"center", display:"block" }}
             />
             <div style={{ position:"absolute", inset:0, background:"linear-gradient(to top, rgba(46,30,18,0.6) 0%, transparent 60%)" }}/>
@@ -444,7 +480,7 @@ function PhilosophySection() {
               <div style={{ fontFamily:"'Jost',sans-serif", fontSize:10, color:C.goldLight, letterSpacing:"0.2em" }}>— FONDATRICE, CARE YELLI</div>
             </div>
           </div>
-          <div style={{ position:"absolute", bottom:-16, right:-16, width:"100%", height:"100%", border:`1px solid ${C.sand}`, borderRadius:4, zIndex:-1 }}/>
+          <div className="philo-frame-shadow" style={{ position:"absolute", bottom:-16, right:-16, width:"100%", height:"100%", border:`1px solid ${C.sand}`, borderRadius:4, zIndex:-1 }}/>
         </div>
       </div>
     </section>
@@ -540,7 +576,7 @@ function ProductModal({ product, onClose }) {
             </div>
 
             {/* Prix + CTA */}
-            <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", borderTop:`1px solid ${C.cream}`, paddingTop:20, gap:16, flexWrap:"wrap" }}>
+            <div className="modal-footer" style={{ display:"flex", justifyContent:"space-between", alignItems:"center", borderTop:`1px solid ${C.cream}`, paddingTop:20, gap:16, flexWrap:"wrap" }}>
               <div>
                 <div style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:28, color:C.dark, fontWeight:400 }}>{product.price}</div>
                 <div style={{ fontFamily:"'Jost',sans-serif", fontSize:9, color:C.gold, letterSpacing:"0.15em" }}>{product.size} — {product.skin}</div>
@@ -549,11 +585,13 @@ function ProductModal({ product, onClose }) {
                 href={waUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                className="modal-wa"
                 style={{
                   background:product.color, color:C.ivory, border:"none", borderRadius:2,
                   padding:"14px 28px", fontFamily:"'Jost',sans-serif",
                   fontSize:10, letterSpacing:"0.2em", cursor:"pointer",
                   textDecoration:"none", display:"inline-flex", alignItems:"center", gap:8,
+                  minHeight:48,
                 }}
               >
                 <span>📱</span> COMMANDER VIA WHATSAPP
@@ -625,7 +663,7 @@ function ProductCard({ product, onOpen }) {
         <h3 style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:22, fontWeight:400, color:C.dark, margin:"0 0 4px", lineHeight:1.2 }}>{product.name}</h3>
         <p style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:15, fontStyle:"italic", color:C.gold, margin:"0 0 14px" }}>{product.subtitle}</p>
         <p style={{ fontFamily:"'Jost',sans-serif", fontSize:13, fontWeight:300, color:C.darkMid, lineHeight:1.75, margin:"0 0 20px" }}>{product.description}</p>
-        <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", borderTop:`1px solid ${C.cream}`, paddingTop:16 }}>
+        <div className="prod-action" style={{ display:"flex", justifyContent:"space-between", alignItems:"center", borderTop:`1px solid ${C.cream}`, paddingTop:16 }}>
           <div>
             <div style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:22, color:C.dark, fontWeight:400 }}>{product.price}</div>
             <div style={{ fontFamily:"'Jost',sans-serif", fontSize:9, color:C.gold, letterSpacing:"0.15em" }}>{product.size}</div>
@@ -635,6 +673,7 @@ function ProductCard({ product, onOpen }) {
             target="_blank"
             rel="noopener noreferrer"
             onClick={e => e.stopPropagation()}
+            className="prod-btn"
             style={{
               background: hovered ? product.color : "transparent",
               color: hovered ? C.ivory : product.color,
@@ -642,6 +681,7 @@ function ProductCard({ product, onOpen }) {
               padding:"10px 20px", fontFamily:"'Jost',sans-serif",
               fontSize:10, letterSpacing:"0.2em", cursor:"pointer",
               textDecoration:"none", transition:"all 0.3s ease",
+              minHeight:48,
             }}
           >AJOUTER</a>
         </div>
@@ -667,11 +707,11 @@ function ProductsSection({ onOpen, onOpenAntiAge, onOpenNila }) {
           {PRODUCTS.map(p => <ProductCard key={p.id} product={p} onOpen={p.id === "figue" ? onOpenAntiAge : p.id === "nila" ? onOpenNila : onOpen}/>)}
         </div>
         <div style={{ textAlign:"center", marginTop:56 }}>
-          <a href={`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent("Bonjour, je souhaite voir toute la gamme Care Yelli")}`} target="_blank" rel="noopener noreferrer" style={{
+          <a href={`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent("Bonjour, je souhaite voir toute la gamme Care Yelli")}`} target="_blank" rel="noopener noreferrer" className="gamme-btn" style={{
             display:"inline-block", background:"transparent", color:C.dark,
             border:`1px solid ${C.dark}`, borderRadius:2, padding:"16px 48px",
             fontFamily:"'Jost',sans-serif", fontSize:11, letterSpacing:"0.25em",
-            cursor:"pointer", textDecoration:"none",
+            cursor:"pointer", textDecoration:"none", minHeight:48,
           }}>
             VOIR TOUTE LA GAMME
           </a>
@@ -929,11 +969,12 @@ function Footer() {
     <footer style={{ background:C.dark, padding:"64px 6% 40px" }}>
       <div style={{ maxWidth:1200, margin:"0 auto" }}>
         <div className="gf" style={{ gap:48, marginBottom:56 }}>
-          <div>
+          <div className="footer-brand" style={{ display:"flex", flexDirection:"column" }}>
             <div style={{ marginBottom:20 }}>
               <img
                 src="/images/yellicare_clean.png"
                 alt="Care Yelli — Soins Naturels Marocains"
+                className="footer-logo"
                 style={{ height:90, width:"auto", display:"block" }}
               />
             </div>
@@ -1010,7 +1051,7 @@ export default function CareYelliWebsite() {
   return (
     <>
       <style>{FONTS}</style>
-      <style>{`* { margin:0; padding:0; box-sizing:border-box; } body { background:${C.ivory}; } a:hover,button:hover { opacity:0.88; } ::-webkit-scrollbar { width:4px; } ::-webkit-scrollbar-track { background:${C.cream}; } ::-webkit-scrollbar-thumb { background:${C.ocre}; border-radius:2px; }`}</style>
+      <style>{`* { margin:0; padding:0; box-sizing:border-box; } body { background:${C.ivory}; overflow-x:hidden; } a:hover,button:hover { opacity:0.88; } ::-webkit-scrollbar { width:4px; } ::-webkit-scrollbar-track { background:${C.cream}; } ::-webkit-scrollbar-thumb { background:${C.ocre}; border-radius:2px; }`}</style>
       <style>{RESPONSIVE_CSS}</style>
 
       <TrustBar/>
