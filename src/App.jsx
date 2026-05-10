@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
+import ProductAntiAge from "./ProductAntiAge.jsx";
 
 // ─── Config — à personnaliser ─────────────────────────────────────
-const WA_NUMBER    = "212XXXXXXXXX";          // ← remplacer par le vrai numéro
+export const WA_NUMBER    = "212XXXXXXXXX";          // ← remplacer par le vrai numéro
 const FORMSPREE_ID = "TON_ID";                // ← remplacer par l'ID Formspree
 
 // ─── Images ──────────────────────────────────────────────────────
@@ -18,7 +19,7 @@ const IMG_HANDS      = "/images/hands.jpg";
 const IMG_PHILOSOPHIE= "/images/philosophie.jpg";
 
 // ─── Palette ─────────────────────────────────────────────────────
-const C = {
+export const C = {
   ocre: "#C4724A", ocreDark: "#9E5835", gold: "#A07842",
   goldLight: "#C9A96E", ivory: "#F7F3EE", cream: "#EDE5D8",
   sand: "#D4C4B0", dark: "#2E1E12", darkMid: "#5C3D28", white: "#FDFAF6",
@@ -73,7 +74,7 @@ const RESPONSIVE_CSS = `
 `;
 
 // ─── Produits ─────────────────────────────────────────────────────
-const PRODUCTS = [
+export const PRODUCTS = [
   {
     id: "oliban", name: "Éclat du Teint", subtitle: "Renouvellement Cellulaire",
     tagline: "Oliban · Collagène · Résine de Boswellia",
@@ -564,7 +565,7 @@ function ProductCard({ product, onOpen }) {
 }
 
 // ─── Products section ─────────────────────────────────────────────
-function ProductsSection({ onOpen }) {
+function ProductsSection({ onOpen, onOpenAntiAge }) {
   return (
     <section id="soins" className="section-pad" style={{ background:C.cream, padding:"120px 6%", position:"relative" }}>
       <ZelligePattern opacity={0.04}/>
@@ -577,7 +578,7 @@ function ProductsSection({ onOpen }) {
           </p>
         </div>
         <div className="g3" style={{ gap:28 }}>
-          {PRODUCTS.map(p => <ProductCard key={p.id} product={p} onOpen={onOpen}/>)}
+          {PRODUCTS.map(p => <ProductCard key={p.id} product={p} onOpen={p.id === "figue" ? onOpenAntiAge : onOpen}/>)}
         </div>
         <div style={{ textAlign:"center", marginTop:56 }}>
           <a href={`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent("Bonjour, je souhaite voir toute la gamme Care Yelli")}`} target="_blank" rel="noopener noreferrer" style={{
@@ -894,6 +895,7 @@ function CookieBanner() {
 export default function CareYelliWebsite() {
   const [scrolled, setScrolled] = useState(false);
   const [modalProduct, setModalProduct] = useState(null);
+  const [openProduct, setOpenProduct] = useState(false);
 
   useEffect(() => {
     const h = () => setScrolled(window.scrollY > 60);
@@ -911,7 +913,7 @@ export default function CareYelliWebsite() {
       <NavBar scrolled={scrolled}/>
       <HeroSection/>
       <PhilosophySection/>
-      <ProductsSection onOpen={setModalProduct}/>
+      <ProductsSection onOpen={setModalProduct} onOpenAntiAge={() => { setModalProduct(null); setOpenProduct(true); }}/>
       <IngredientsSection/>
       <ReviewsSection/>
       <ValuesSection/>
@@ -919,6 +921,7 @@ export default function CareYelliWebsite() {
       <Footer/>
       <CookieBanner/>
 
+      {openProduct && <ProductAntiAge onClose={() => setOpenProduct(false)}/>}
       {modalProduct && (
         <ProductModal product={modalProduct} onClose={() => setModalProduct(null)}/>
       )}
