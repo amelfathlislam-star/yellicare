@@ -12,12 +12,14 @@ const IMG_ALOE       = "/images/aloe.jpg";
 const IMG_FIGUE      = "/images/figue.jpg";
 const IMG_KARITE     = "/images/karite.jpg";
 const IMG_TEXTURE    = "/images/texture.jpg";
-const IMG_JAR        = "/images/jar.jpg";
-const IMG_OLIBAN     = "/images/1.png";
-const IMG_NILA       = "/images/2.png";
-const IMG_ANTIAGE    = "/images/3.png";
-const IMG_HANDS      = "/images/hands.jpg";
-const IMG_PHILOSOPHIE= "/images/philosophie.jpg";
+const IMG_OLIBAN     = "/images/eclat-bois.jpg.png";
+const IMG_OLIBAN2    = "/images/eclat-bois2.jpg.png";
+const IMG_NILA       = "/images/nila-bois.jpg.png";
+const IMG_NILA2      = "/images/nila-lin.jpg.png";
+const IMG_ANTIAGE    = "/images/antiage-beldi.jpg.png";
+const IMG_ANTIAGE2   = "/images/antiage-cactus.jpg.png";
+const IMG_PHILOSOPHIE= "/images/antiage-mains.jpg.png";
+const IMG_MARBRE     = "/images/eclat-marbre.jpg.png";
 
 // ─── Palette ─────────────────────────────────────────────────────
 export const C = {
@@ -83,7 +85,7 @@ export const PRODUCTS = [
     description: "Le secret des femmes du Souss depuis des générations. L\'encens oliban, trésor des caravanes sahariennes, révèle l\'éclat naturel tout en renforçant la barrière cutanée.",
     color: "#C4724A", colorLight: "#E8A882", label: "Purifiant · Apaisant",
     price: "240 MAD", size: "50ml", skin: "Tous types de peau",
-    image: IMG_OLIBAN,
+    image: IMG_OLIBAN, image2: IMG_OLIBAN2,
     benefits: ["Purifie en profondeur", "Apaise les rougeurs", "Renforce la barrière cutanée", "Révèle l\'éclat naturel"],
     howToUse: "Appliquer matin et/ou soir sur visage propre et sec. Masser en mouvements circulaires jusqu\'à absorption complète.",
     inci: "Aqua, Boswellia Serrata Resin Extract, Hydrolyzed Collagen, Argania Spinosa Kernel Oil, Butyrospermum Parkii Butter, Aloe Barbadensis Leaf Juice, Glycerin, Tocopherol.",
@@ -94,7 +96,7 @@ export const PRODUCTS = [
     description: "La plante indigo, utilisée au hammam depuis des siècles, illumine et unifie le teint. Enrichi d\'huile d\'argan vierge du Souss-Massa, pressée à froid.",
     color: "#7B9BAD", colorLight: "#B8D0DB", label: "Effet perfecteur · Teint terne",
     price: "210 MAD", size: "50ml", skin: "Peaux ternes",
-    image: IMG_NILA,
+    image: IMG_NILA, image2: IMG_NILA2,
     benefits: ["Unifie le teint", "Hydratation longue durée", "Effet bonne mine immédiat", "Réduit l\'aspect terne"],
     howToUse: "Utiliser matin et soir après nettoyage. Déposer une noisette sur le visage et le cou, masser doucement jusqu\'à pénétration complète.",
     inci: "Aqua, Argania Spinosa Kernel Oil*, Indigofera Tinctoria Leaf Powder, Aloe Barbadensis Leaf Juice, Sodium Hyaluronate, Glycerin, Tocopherol. *Agriculture biologique.",
@@ -105,7 +107,7 @@ export const PRODUCTS = [
     description: "L\'huile précieuse extraite des pépins de figue de barbarie — il faut 1 tonne de fruits pour obtenir 1 litre. Un concentré de régénération pour une peau redensifiée.",
     color: "#7A9B6E", colorLight: "#B5CC9E", label: "Régénérant · Hydratant",
     price: "290 MAD", size: "50ml", skin: "Tous types de peau",
-    image: IMG_ANTIAGE,
+    image: IMG_ANTIAGE, image2: IMG_ANTIAGE2,
     benefits: ["Réduit visiblement les rides", "Raffermit et redensifie", "Régénère en profondeur", "Nourrit intensément"],
     howToUse: "Appliquer le soir sur visage et cou propres. Masser délicatement en insistant sur les zones de tension. Laisser agir toute la nuit.",
     inci: "Aqua, Opuntia Ficus-Indica Seed Oil, Butyrospermum Parkii Butter, Opuntia Ficus-Indica Stem Extract, Glycerin, Tocopherol, Rosmarinus Officinalis Leaf Extract.",
@@ -148,7 +150,7 @@ const INGREDIENTS = [
     name: "Nila pur", origin: "Maghreb",
     benefit: "Éclat & unification du teint",
     detail: "L\'indigo naturel des artisanes marocaines, transmis de génération en génération.",
-    image: IMG_HANDS, objectPosition: "center top",
+    image: IMG_NILA, objectPosition: "center top",
   },
 ];
 
@@ -345,8 +347,9 @@ function HeroSection() {
         }}
       >
         <img
-          src="/images/hero.jpg.png"
-          alt="Les trois soins Yelli Care"
+          src="/images/hero-trio.jpg.png"
+          alt="Les trois soins Care Yelli — Éclat, Nila et Anti-Âge sur fond lin naturel"
+          loading="lazy"
           style={{
             position:"absolute", inset:0,
             width:"100%", height:"100%",
@@ -382,7 +385,12 @@ function PhilosophySection() {
         </div>
         <div style={{ position:"relative" }}>
           <div style={{ borderRadius:4, overflow:"hidden", position:"relative" }}>
-            <img src={IMG_PHILOSOPHIE} alt="Rituel de soin" style={{ width:"100%", height:480, objectFit:"cover", objectPosition:"center", display:"block" }}/>
+            <img
+              src={IMG_PHILOSOPHIE}
+              alt="Mains appliquant un soin Yelli Care — rituel de beauté berbère"
+              loading="lazy"
+              style={{ width:"100%", height:480, objectFit:"cover", objectPosition:"center", display:"block" }}
+            />
             <div style={{ position:"absolute", inset:0, background:"linear-gradient(to top, rgba(46,30,18,0.6) 0%, transparent 60%)" }}/>
             <div style={{ position:"absolute", bottom:32, left:32, right:32 }}>
               <p style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:20, fontStyle:"italic", color:C.ivory, lineHeight:1.6, margin:"0 0 12px" }}>
@@ -534,12 +542,32 @@ function ProductCard({ product, onOpen }) {
     >
       <div style={{ position:"relative", height:300, overflow:"hidden", background:C.cream }}>
         <ZelligePattern opacity={0.04}/>
-        <img src={product.image} alt={product.name} style={{
-          position:"absolute", inset:0, width:"100%", height:"100%",
-          objectFit:"contain", objectPosition:"center", padding:32,
-          transform: hovered ? "scale(1.04)" : "scale(1)",
-          transition:"transform 0.5s ease",
-        }}/>
+        <img
+          src={product.image}
+          alt={product.name}
+          loading="lazy"
+          style={{
+            position:"absolute", inset:0, width:"100%", height:"100%",
+            objectFit:"cover", objectPosition:"center",
+            transform: hovered ? "scale(1.04)" : "scale(1)",
+            transition:"transform 0.5s ease, opacity 0.4s ease",
+            opacity: hovered && product.image2 ? 0 : 1,
+          }}
+        />
+        {product.image2 && (
+          <img
+            src={product.image2}
+            alt={`${product.name} — vue détail`}
+            loading="lazy"
+            style={{
+              position:"absolute", inset:0, width:"100%", height:"100%",
+              objectFit:"cover", objectPosition:"center",
+              transform: hovered ? "scale(1.04)" : "scale(1.08)",
+              transition:"transform 0.5s ease, opacity 0.4s ease",
+              opacity: hovered ? 1 : 0,
+            }}
+          />
+        )}
         <div style={{
           position:"absolute", bottom:16, left:16,
           background:product.color, color:C.ivory, borderRadius:40,
@@ -623,7 +651,7 @@ function IngredientCard({ ing }) {
       }}
     >
       <div style={{ height:220, overflow:"hidden", position:"relative" }}>
-        <img src={ing.image} alt={ing.name} style={{
+        <img src={ing.image} alt={ing.name} loading="lazy" style={{
           width:"100%", height:"100%", objectFit:"cover",
           objectPosition: ing.objectPosition || "center",
           transform: hovered ? "scale(1.07)" : "scale(1)",
@@ -662,7 +690,22 @@ function IngredientsSection() {
         <div className="gi" style={{ gap:24 }}>
           {INGREDIENTS.map(ing => <IngredientCard key={ing.name} ing={ing}/>)}
         </div>
-        <div className="stat-banner" style={{ marginTop:56, background:C.ocre, borderRadius:4, padding:"40px 48px", display:"flex", alignItems:"center", justifyContent:"space-between" }}>
+        {/* Visuel d'ambiance marbre / texture */}
+        <div style={{ marginTop:56, borderRadius:4, overflow:"hidden", position:"relative", height:220 }}>
+          <img
+            src={IMG_MARBRE}
+            alt="Texture marbre et poudres naturelles — matières premières Care Yelli"
+            loading="lazy"
+            style={{ width:"100%", height:"100%", objectFit:"cover", objectPosition:"center", display:"block" }}
+          />
+          <div style={{ position:"absolute", inset:0, background:"linear-gradient(to right, rgba(46,30,18,0.55) 0%, rgba(46,30,18,0.1) 60%, transparent 100%)" }}/>
+          <div style={{ position:"absolute", top:"50%", left:48, transform:"translateY(-50%)" }}>
+            <div style={{ fontFamily:"'Jost',sans-serif", fontSize:10, letterSpacing:"0.4em", color:C.goldLight, marginBottom:10 }}>MATIÈRES PREMIÈRES</div>
+            <div style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:"clamp(22px,3vw,36px)", color:C.ivory, fontWeight:300, lineHeight:1.2 }}>Sélectionnées à la source,<br/><em>tracées jusqu'à vous.</em></div>
+          </div>
+        </div>
+
+        <div className="stat-banner" style={{ marginTop:24, background:C.ocre, borderRadius:4, padding:"40px 48px", display:"flex", alignItems:"center", justifyContent:"space-between" }}>
           <div style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:"clamp(36px,6vw,48px)", color:C.ivory, fontWeight:300 }}>1T</div>
           <div style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:20, color:"rgba(253,250,246,0.85)", fontStyle:"italic", maxWidth:400, lineHeight:1.5 }}>
             de fruits de figue de barbarie pour obtenir un litre d\'huile précieuse
