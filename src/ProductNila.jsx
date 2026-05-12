@@ -241,7 +241,7 @@ export default function ProductNila({ onClose }) {
               </div>
               {/* Rassurance */}
               <div style={{ display:"flex", gap:20, flexWrap:"wrap" }}>
-                {["🌿 100% Naturel", "🚚 Livraison Agadir", "↩ Retour 30j"].map(item => (
+                {["🌿 100% Naturel", "🚚 Livraison Agadir"].map(item => (
                   <span key={item} style={{ fontFamily:"'Jost',sans-serif", fontSize:10, color:C.darkMid, letterSpacing:"0.1em" }}>{item}</span>
                 ))}
               </div>

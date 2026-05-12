@@ -141,7 +141,7 @@ export const PRODUCTS = [
   },
   {
     id: "figue", name: "Soin Anti-Âge", subtitle: "Raffermissant",
-    tagline: "Graines de figue de Barbarie · Karité · Cactus",
+    tagline: "Huile de pépins de figue de Barbarie",
     description: "L\'huile précieuse extraite des pépins de figue de barbarie — il faut 1 tonne de fruits pour obtenir 1 litre. Un concentré de régénération pour une peau redensifiée.",
     color: "#7A9B6E", colorLight: "#B5CC9E", label: "Régénérant · Hydratant",
     price: "290 MAD", size: "50ml", skin: "Tous types de peau",
@@ -251,7 +251,7 @@ const NAV_LINKS = [
   { label:"Soins",        href:"#soins" },
   { label:"Ingrédients",  href:"#ingredients" },
   { label:"Histoire",     href:"#histoire" },
-  { label:"Boutique",     href:"#boutique" },
+  { label:"Boutique",     href:"#soins" },
 ];
 
 function NavBar({ scrolled }) {
@@ -270,12 +270,11 @@ function NavBar({ scrolled }) {
       <div style={{ maxWidth:1200, margin:"0 auto", display:"flex", alignItems:"center", justifyContent:"space-between", height:72 }}>
         {/* Logo */}
         <a href="#" style={{ textDecoration:"none", display:"flex", alignItems:"center" }}>
-          <img
-            src="/images/yellicare_clean.png"
-            alt="Care Yelli — Soins Naturels Marocains"
-            className="nav-logo-img"
-            style={{ height:50, width:"auto", display:"block" }}
-          />
+          <div style={{ display:"flex", flexDirection:"column", alignItems:"flex-start", lineHeight:1, gap:2 }}>
+            <div style={{ fontFamily:"'Jost',sans-serif", fontSize:8, letterSpacing:"0.4em", color:C.gold, fontWeight:300 }}>CARE</div>
+            <span style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:26, color: scrolled ? C.dark : C.ivory, fontWeight:300, lineHeight:1, transition:"color 0.4s ease" }}>yelli</span>
+            <div style={{ fontFamily:"'Jost',sans-serif", fontSize:8, letterSpacing:"0.3em", color:C.goldLight, fontWeight:300 }}>— يلي —</div>
+          </div>
         </a>
         {/* Desktop links */}
         <div className="nav-links" style={{ display:"flex", gap:36, alignItems:"center" }}>
@@ -376,14 +375,16 @@ function HeroSection() {
           transition:"all 1.2s cubic-bezier(0.22,1,0.36,1) 0.5s",
         }}
       >
-        <div style={{ fontFamily:"'Jost',sans-serif", fontSize:10, letterSpacing:"0.5em", color:C.ocre, marginBottom:28, fontWeight:300, display:"flex", alignItems:"center", gap:16 }}>
-          <span style={{ display:"inline-block", width:40, height:1, background:C.ocre }}/>
-          SOINS NATURELS DU TERROIR MAROCAIN
+        <div style={{ fontFamily:"'Jost',sans-serif", fontSize:11, letterSpacing:"0.35em", color:C.goldLight, marginBottom:28, fontWeight:300, display:"flex", alignItems:"center", gap:16 }}>
+          <span style={{ display:"inline-block", width:40, height:1, background:C.goldLight }}/>
+          SOINS HÉRITÉS DU PASSÉ, RÉVÉLÉS POUR VOTRE PEAU...
         </div>
-        <h1 style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:"clamp(40px,6vw,96px)", color:C.ivory, fontWeight:300, lineHeight:1.05, margin:"0 0 8px" }}>Transmis</h1>
-        <h1 style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:"clamp(40px,6vw,96px)", color:C.ocre, fontWeight:400, fontStyle:"italic", lineHeight:1.05, margin:"0 0 40px" }}>de mère en fille.</h1>
+        <h1 style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:"clamp(42px,8vw,88px)", lineHeight:1.05, margin:"0 0 40px" }}>
+          <span style={{ color:C.ivory, fontWeight:300 }}>Ode à la </span>
+          <em style={{ color:C.ocre, fontWeight:400, fontStyle:"italic" }}>transmission</em>
+        </h1>
         <p style={{ fontFamily:"'Jost',sans-serif", fontSize:15, fontWeight:300, color:"rgba(237,229,216,0.82)", lineHeight:1.85, maxWidth:480, marginBottom:52 }}>
-          Des soins enracinés dans la tradition berbère et africaine. Huile d\'argan, oliban, figue de barbarie — les secrets de beauté que nos mères nous ont confiés.
+          Des soins confiés et préservés dans la tradition berbère que nous avons mis en flacon pour vous.
         </p>
         <div className="hero-cta-row" style={{ display:"flex", gap:16, alignItems:"center", flexWrap:"wrap" }}>
           <a href="#soins" className="hero-discover" style={{ background:C.ocre, color:C.ivory, border:"none", borderRadius:2, padding:"16px 36px", fontFamily:"'Jost',sans-serif", fontSize:11, letterSpacing:"0.25em", cursor:"pointer", textDecoration:"none", minHeight:48, display:"inline-flex", alignItems:"center", justifyContent:"center" }}>DÉCOUVRIR LES SOINS</a>
@@ -457,10 +458,10 @@ function PhilosophySection() {
             Yelli — <em>« ma fille »</em><br/>en langue berbère
           </h2>
           <p style={{ fontFamily:"'Jost',sans-serif", fontSize:15, fontWeight:300, color:C.darkMid, lineHeight:1.9, marginBottom:24 }}>
-            Chaque pot Care Yelli est une lettre d\'amour. Celle qu\'une mère écrit à sa fille en lui transmettant les gestes ancestraux du soin — l\'application du savon beldi, le rituel du ghassoul, l\'huile d\'argan chauffée dans les paumes.
+            C\'est sous le soleil du Maroc qu\'est née Yelli Care. En choisissant ce nom, nous avons voulu placer la bienveillance au cœur de nos soins. Comme une mère transmettant à sa fille ses secrets de beauté les plus précieux.
           </p>
           <p style={{ fontFamily:"'Jost',sans-serif", fontSize:15, fontWeight:300, color:C.darkMid, lineHeight:1.9 }}>
-            Nos formules s\'ancrent dans ce patrimoine vivant, enrichi par les savoirs des femmes du Souss, des souks de Marrakech et des caravanes sahariennes.
+            Nos formules s\'ancrent dans ce patrimoine vivant, enrichi par les savoirs des femmes du Souss, des souks de Marrakech aux caravanes sahariennes.
           </p>
         </div>
         <div style={{ position:"relative" }}>
@@ -849,7 +850,6 @@ function ValuesSection() {
   const values = [
     { title:"Beldi & Chic", desc:"Le luxe marocain dans toute sa subtilité — ni ostentatoire ni banal. Une élégance qui vient de l\'intérieur.", icon:"◇" },
     { title:"Formules propres", desc:"Sans parabènes, sulfates, huiles minérales ni colorants artificiels. Ce que vous ne trouvez pas dedans compte autant.", icon:"◈" },
-    { title:"Circuits courts", desc:"Coopératives de femmes berbères, producteurs bio du Souss-Massa. Chaque achat soutient une chaîne humaine.", icon:"◉" },
     { title:"Héritage vivant", desc:"Les recettes évoluent, mais l\'intention reste. Transmettre un geste de soin qui traverse les générations.", icon:"◊" },
   ];
   return (
