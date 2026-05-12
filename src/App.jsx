@@ -76,7 +76,7 @@ const RESPONSIVE_CSS = `
     /* Hero */
     .hero-section { min-height:70vh !important; }
     .hero-bg-img  { object-position:center !important; }
-    .hero-content { padding:108px 5% 56px !important; max-width:100% !important; }
+    .hero-content { bottom:8% !important; padding:0 5% 56px !important; max-width:100% !important; }
     .hero-cta-row { flex-direction:column !important; align-items:stretch !important; gap:12px !important; }
     .hero-discover{ text-align:center !important; padding:18px 16px !important; }
     .hero-order   { justify-content:center !important; }
@@ -333,7 +333,7 @@ function HeroSection() {
   const waUrl = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent("Bonjour, je souhaite découvrir les soins Care Yelli")}`;
 
   return (
-    <section className="hero-section" style={{ position:"relative", minHeight:"100vh", overflow:"hidden", display:"flex", alignItems:"center" }}>
+    <section className="hero-section" style={{ position:"relative", minHeight:"100vh", overflow:"hidden" }}>
 
       {/* Image plein écran */}
       <img
@@ -367,8 +367,8 @@ function HeroSection() {
       <div
         className="hero-content"
         style={{
-          position:"relative", zIndex:2,
-          padding:"140px 8% 100px 8%",
+          position:"absolute", bottom:"10%", left:0, right:0, zIndex:2,
+          padding:"0 6% 60px",
           maxWidth:760, width:"100%",
           opacity: loaded ? 1 : 0,
           transform: loaded ? "none" : "translateY(28px)",
@@ -379,10 +379,8 @@ function HeroSection() {
           <span style={{ display:"inline-block", width:40, height:1, background:C.goldLight }}/>
           SOINS HÉRITÉS DU PASSÉ, RÉVÉLÉS POUR VOTRE PEAU...
         </div>
-        <h1 style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:"clamp(42px,8vw,88px)", lineHeight:1.05, margin:"0 0 40px" }}>
-          <span style={{ color:C.ivory, fontWeight:300 }}>Ode à la </span>
-          <em style={{ color:C.ocre, fontWeight:400, fontStyle:"italic" }}>transmission</em>
-        </h1>
+        <h1 style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:"clamp(42px,8vw,88px)", color:C.ivory, fontWeight:300, lineHeight:0.95, margin:"0" }}>Ode à la</h1>
+        <h1 style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:"clamp(42px,8vw,88px)", color:C.ocre, fontWeight:400, fontStyle:"italic", lineHeight:0.95, margin:"0 0 40px" }}>transmission</h1>
         <p style={{ fontFamily:"'Jost',sans-serif", fontSize:15, fontWeight:300, color:"rgba(237,229,216,0.82)", lineHeight:1.85, maxWidth:480, marginBottom:52 }}>
           Des soins confiés et préservés dans la tradition berbère que nous avons mis en flacon pour vous.
         </p>
